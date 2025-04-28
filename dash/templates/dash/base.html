@@ -1,0 +1,68 @@
+{% load static %}
+<!-- dash/templates/dash/home.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megafix</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome -->
+</head>
+<body>
+    <div class="sidebar" >
+        <h2><i class="fas fa-tachometer-alt"></i> MEGAFIX</h2>
+        <ul class="menu">
+            <li class="section">Pages</li>
+            <li><a href="{% url 'dash:home' %}"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="section">Contenidos</li>
+            <li>
+                <a href="#" data-toggle="collapse" data-target="#years"><i class="fas fa-calendar-alt"></i> Año</a>
+                <ul id="years" class="collapse submenu">
+                    <li><a href="#"><i class="fas fa-calendar"></i> 2020</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> 2021</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> 2022</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> 2023</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> 2024</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" data-toggle="collapse" data-target="#months"><i class="fas fa-calendar-day"></i> Mes</a>
+                <ul id="months" class="collapse submenu">
+                    <li><a href="#"><i class="fas fa-calendar"></i> Enero</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Febrero</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Marzo</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Abril</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Mayo</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Junio</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Julio</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Agosto</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Septiembre</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Octubre</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Noviembre</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Diciembre</a></li>
+                </ul>
+            </li>
+            <li><a href="{% url 'dash:comparaciones' %}"><i class="fas fa-exchange-alt"></i> Comparaciones</a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> Predicciones</a></li>
+            <li class="section">Sesión</li>
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+            
+            <li><a href="#"><i class="fas fa-user-plus"></i> Registrar Persona</a></li>
+        </ul>
+    </div>
+    <div class="content" id="main-content">
+        <div class="container">
+            {% block content %}
+
+            {% endblock %}
+            
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
