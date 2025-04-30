@@ -1,0 +1,77 @@
+{% extends 'dash/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+  
+      .top-section {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+  
+      .top-section .filter {
+        width: 48%;
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+  
+      .main-section {
+        display: flex;
+      }
+  
+      .chart-container {
+        width: 70%;
+      }
+  
+      .side-boxes {
+        width: 28%;
+        margin-left: 2%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+  
+      .box {
+        padding: 10px;
+        border: 1px solid #aaa;
+        height: 60px;
+      }
+    </style>
+  </head>
+  <body>
+  
+    <div class="top-section">
+        <iframe src="{% static 'graficas/resumen_datos.html' %}" width="300px" height="400px"></iframe>
+    </div>
+  
+    <div class="main-section">
+      <div class="chart-container">
+        <canvas id="miGrafica"></canvas>
+      </div>
+      <div class="side-boxes">
+        <div class="box">Cuadro 3</div>
+        <div class="box">Cuadro 4</div>
+        <div class="box">Cuadro 5</div>
+        <div class="box">Cuadro 6</div>
+        <div class="box">Cuadro 7</div>
+        <div class="box">Cuadro 8</div>
+      </div>
+    </div>
+    <canvas id="grafico"></canvas>
+    <div>
+        <iframe src="{% static 'graficas/grafica_Enero2020.html' %}" width="100%" height="300px"></iframe>
+    </div>
+</body>
+</html>
+{% endblock %}

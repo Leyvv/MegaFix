@@ -11,5 +11,11 @@ urlpatterns = [
    #  path('logout/', auth_views.LogoutView.as_view(), name='logout'),
    path('comparaciones/', views.comparaciones, name='comparaciones'),
     path('comparar_ventas/', views.comparar_ventas, name='comparar_ventas'),
-  
+  path('comparacion/', views.ver_comparacion, name='ver_comparacion'),
+ path('datosEnero-Diciembre 2020-2024/<int:anio>/<str:mes>.html',
+        views.ver_datos_mes,
+        name='ver_datos_mes'),
+
+
+
 ]
