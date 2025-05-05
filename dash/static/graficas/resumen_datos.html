@@ -97,7 +97,7 @@
       <i class="fas fa-calendar-day"></i>
       <div class="content">
         <div class="label">Día más vendido</div>
-        <div class="value" id="dia-mayor">{{ dia_mayor }}</div>
+        <div class="value" id="dia-mayor">---</div>
       </div>
     </div>
 
@@ -105,29 +105,63 @@
       <i class="fas fa-dollar-sign"></i>
       <div class="content">
         <div class="label">Total</div>
-        <div class="value" id="valor-mayor">{{ valor_mayor }}</div>
+        <div class="value" id="valor-mayor">---</div>
       </div>
     </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const anio = urlParams.get('año');
-      const mes = urlParams.get('mes');
-
-      if (anio && mes) {
-        fetch(`/home/obtener-dia-mas-vendido/?año=${anio}&mes=${mes}`)
-          .then(response => response.json())
-          .then(data => {
-            document.getElementById('dia-mayor').textContent = data.dia;
-            document.getElementById('valor-mayor').textContent = data.total;
-          })
-          .catch(error => {
-            console.error('Error al obtener los datos:', error);
-          });
+    // Cargar archivo JSON con fetch
+    async function cargarDatos() {
+      const response = await fetch('/static/graficas/dias_mas_vendidos.json');
+      const data = await response.json();
+      return data;
+    }
+  
+    // Obtener mes en formato MM
+    function mesATextoANumero(mesTexto) {
+      const meses = {
+        "enero": "01",
+        "febrero": "02",
+        "marzo": "03",
+        "abril": "04",
+        "mayo": "05",
+        "junio": "06",
+        "julio": "07",
+        "agosto": "08",
+        "septiembre": "09",
+        "octubre": "10",
+        "noviembre": "11",
+        "diciembre": "12"
+      };
+      return meses[mesTexto.toLowerCase()];
+    }
+  
+    async function actualizarResumen() {
+      const año = localStorage.getItem('añoSeleccionado');
+      const mesTexto = localStorage.getItem('mesSeleccionado');
+      if (!año || !mesTexto) return;
+  
+      const mes = mesATextoANumero(mesTexto);
+  
+      const datos = await cargarDatos();
+  
+      const resultado = datos.find(item => {
+        const [anioData, mesData] = item.fecha.split('-');
+        return anioData === año && mesData === mes;
+      });
+  
+      if (resultado) {
+        document.getElementById('dia-mayor').textContent = resultado.fecha;
+        document.getElementById('valor-mayor').textContent = resultado.total;
+      } else {
+        document.getElementById('dia-mayor').textContent = "No disponible";
+        document.getElementById('valor-mayor').textContent = "No disponible";
       }
-    });
+    }
+  
+    // Ejecutar al cargar la página
+    window.addEventListener('DOMContentLoaded', actualizarResumen);
   </script>
 
 </body>

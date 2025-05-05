@@ -17,6 +17,6 @@ urlpatterns = [
  path('datosEnero-Diciembre 2020-2024/<int:anio>/<str:mes>.html',
         views.ver_datos_mes,
         name='ver_datos_mes'),
- path('obtener-dia-mas-vendido/', views.obtener_dia_mas_vendido_filtrado, name='obtener_dia_mas_vendido'),
- path('resumen/', views.obtener_dia_mas_vendido, name='resumen_datos'),  
+
+    
 ]

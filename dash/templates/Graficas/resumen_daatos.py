@@ -37,14 +37,13 @@ df = pd.read_sql(query, engine)
 print("✅ Datos obtenidos correctamente.")
 print("Total de días más vendidos:", len(df))
 
-# Procesamiento de datos
-df["Fecha"] = pd.to_datetime(df["Fecha"])
+# Procesar datos para formato JSON
+df["Fecha"] = pd.to_datetime(df["Fecha"]).dt.strftime("%Y-%m-%d")
+df["TotalDia"] = df["TotalDia"].map(lambda x: round(x, 2))
 
-# Guardar los resultados en un archivo de texto
-output_file = "dias_mas_vendidos.txt"
-with open(output_file, "w") as file:
-    file.write("Fecha\tTotalDia\n")
-    for index, row in df.iterrows():
-        file.write(f"{row['Fecha'].strftime('%Y-%m-%d')}\t${row['TotalDia']:,.2f}\n")
-        
+# Guardar los resultados como JSON
+output_file = "dias_mas_vendidos.json"
+df.to_json(output_file, orient="records", indent=4, force_ascii=False)
+
 print(f"✅ Datos guardados en el archivo {output_file}")
+
