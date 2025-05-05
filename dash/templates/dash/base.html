@@ -42,6 +42,35 @@
               </select>
               
               <button id="btn-ir">Ir</button>
+
+              <script>
+                // Cargar selección al abrir la página
+                window.addEventListener('DOMContentLoaded', () => {
+                  const savedYear = localStorage.getItem('añoSeleccionado');
+                  const savedMonth = localStorage.getItem('mesSeleccionado');
+              
+                  if (savedYear) {
+                    document.getElementById('año').value = savedYear;
+                  }
+              
+                  if (savedMonth) {
+                    document.getElementById('mes').value = savedMonth;
+                  }
+                });
+              
+                // Guardar selección al hacer clic en el botón
+                document.getElementById('btn-ir').addEventListener('click', () => {
+                  const año = document.getElementById('año').value;
+                  const mes = document.getElementById('mes').value;
+              
+                  localStorage.setItem('añoSeleccionado', año);
+                  localStorage.setItem('mesSeleccionado', mes);
+              
+                  // Aquí puedes hacer otra lógica, como enviar una consulta o recargar datos
+                  console.log(`Año: ${año}, Mes: ${mes}`);
+                });
+              </script>
+
             <li><a href="{% url 'dash:comparaciones' %}"><i class="fas fa-exchange-alt"></i> Comparaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-line"></i> Predicciones</a></li>
             <li class="section">Sesión</li>

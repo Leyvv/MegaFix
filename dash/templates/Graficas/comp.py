@@ -6,7 +6,7 @@ import os
 # Configuración de la conexión a MySQL
 host = "localhost"
 user = "root"
-password = "Candelaria24"
+password = "itsoeh23"
 database = "truper_ventas"
 engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}/{database}")
 

@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', include('login.urls')),  # Incluir las URLs de la app 'login'
     path('home/', include('dash.urls')),   # Incluir las URLs de la app 'dash'
     path('', lambda request: redirect('login:login')),  # Redirige la raíz a la página de login
+    
 ]

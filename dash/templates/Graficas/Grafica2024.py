@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 # Configurar conexión a MySQL
 host = "localhost"
 user = "root"
-password = "Candelaria24"
+password = "itsoeh23"
 database = "truper_ventas"
 
 # Crear conexión con SQLAlchemy

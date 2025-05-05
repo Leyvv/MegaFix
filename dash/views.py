@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from dash.templates.Graficas.comp import generar_html_comparacion
-from django.shortcuts import render
 from django.http import Http404
+from django.template.loader import render_to_string
 
 @login_required
 def homeView(request):
@@ -65,3 +65,54 @@ def ver_comparacion(request):
         'dia_semana': dia_semana,
         'cantidad': cantidad
     })
+
+
+def obtener_dia_mas_vendido_filtrado(request):
+    anio = request.GET.get('año')
+    mes = request.GET.get('mes')
+
+    # Mapeo de nombres de mes en español a número
+    meses = {
+        'enero': '01', 'febrero': '02', 'marzo': '03', 'abril': '04',
+        'mayo': '05', 'junio': '06', 'julio': '07', 'agosto': '08',
+        'septiembre': '09', 'octubre': '10', 'noviembre': '11', 'diciembre': '12'
+    }
+
+    mes_num = meses.get(mes.lower(), '01')
+
+    ruta = r'C:\Users\jazmi\Documents\GitHub\MegaFix\dias_mas_vendidos.txt'
+    dia_mas_vendido = 'Desconocido'
+    total_mayor = 0.0
+
+    try:
+        with open(ruta, 'r', encoding='utf-8') as file:
+            next(file)  # Saltar encabezado
+            for linea in file:
+                partes = linea.strip().split('\t')
+                if len(partes) == 2:
+                    fecha, total_str = partes
+                    if fecha.startswith(f"{anio}-{mes_num}"):
+                        total = float(total_str.replace('$', '').replace(',', ''))
+                        if total > total_mayor:
+                            total_mayor = total
+                            dia_mas_vendido = fecha
+    except Exception:
+        dia_mas_vendido = 'Error'
+        total_mayor = 0.0
+
+    html = render_to_string('dash/resumen_datos.html', {
+        'dia_mayor': dia_mas_vendido,
+        'valor_mayor': f"${total_mayor:,.2f}"
+    })
+
+    return JsonResponse({'html': html})
+
+def obtener_dia_mas_vendido(request):
+    # Carga el día y total desde el archivo
+    # Aquí deberías leer el archivo y aplicar los filtros si hay mes y año
+    # ...
+    context = {
+        'dia_mayor': '2024-04-05',
+        'valor_mayor': '$303,544.90'
+    }
+    return render(request, 'dash/resumen_datos.html', context)
