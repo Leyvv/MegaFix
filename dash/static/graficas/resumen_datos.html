@@ -1,97 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <title>Resumen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      color: #1a1a1a;
-      padding: 40px 20px;
-    }
+  body {
+    font-family: 'Roboto', sans-serif;
+    color: #1a1a1a;
+    padding: 40px 20px;
+  }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 30px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+  .container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
 
-    .box {
-      background: linear-gradient(135deg, #e0eafc, #cfdef3);
-      border-radius: 20px;
-      padding: 25px 30px;
-      width: 100%;
-      max-width: 360px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+  .box {
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    border-radius: 20px;
+    padding: 25px 30px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
 
-    .box:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-    }
+  .box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
 
-    .box i {
-      font-size: 34px;
-      color: #1a73e8;
-      transition: color 0.3s ease;
-    }
+  .box i {
+    font-size: 34px;
+    color: #1a73e8;
+    transition: color 0.3s ease;
+  }
 
-    .box .content {
-      display: flex;
-      flex-direction: column;
-    }
+  .box .content {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .box .label {
-      font-size: 16px;
-      font-weight: 700;
-      color: #1a1a1a;
-    }
+  .box .label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
 
-    .box .value {
-      font-size: 22px;
-      font-weight: 500;
-      color: #1a1a1a;
-      margin-top: 4px;
-    }
+  .box .value {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-top: 4px;
+  }
 
-    /* Colores personalizados para cada tarjeta */
-    .box:nth-child(1) {
-      background: linear-gradient(135deg, #ffe29f, #ffa99f);
-    }
+  /* Colores personalizados para cada tarjeta */
+  .box:nth-child(1) {
+    background: linear-gradient(135deg, #ffe29f, #ffa99f);
+  }
 
-    .box:nth-child(1) i {
-      color: #e67e22;
-    }
+  .box:nth-child(1) i {
+    color: #e67e22;
+  }
 
-    .box:nth-child(2) {
-      background: linear-gradient(135deg, #b2fefa, #0ed2f7);
-    }
+  .box:nth-child(2) {
+    background: linear-gradient(135deg, #b2fefa, #0ed2f7);
+  }
 
-    .box:nth-child(2) i {
-      color: #16a085;
-    }
-  </style>
+  .box:nth-child(2) i {
+    color: #16a085;
+  }
+</style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </head>
-
 <body>
-
   <div class="container">
     <div class="box">
       <i class="fas fa-calendar-day"></i>
@@ -111,16 +109,13 @@
   </div>
 
   <script>
-    // Cargar archivo JSON con fetch
     async function cargarDatos() {
-      const response = await fetch('/static/graficas/dias_mas_vendidos.json');
-      const data = await response.json();
-      return data;
-    }
+      const año = localStorage.getItem('añoSeleccionado');
+      const mes = localStorage.getItem('mesSeleccionado');
   
-    // Obtener mes en formato MM
-    function mesATextoANumero(mesTexto) {
-      const meses = {
+      if (!año || !mes) return;
+  
+      const mapaMeses = {
         "enero": "01",
         "febrero": "02",
         "marzo": "03",
@@ -134,36 +129,35 @@
         "noviembre": "11",
         "diciembre": "12"
       };
-      return meses[mesTexto.toLowerCase()];
-    }
   
-    async function actualizarResumen() {
-      const año = localStorage.getItem('añoSeleccionado');
-      const mesTexto = localStorage.getItem('mesSeleccionado');
-      if (!año || !mesTexto) return;
+      const numeroMes = mapaMeses[mes.toLowerCase()];
   
-      const mes = mesATextoANumero(mesTexto);
+      try {
+        const response = await fetch("/static/graficas/mayores_dias_venta.json");
+        const datos = await response.json();
   
-      const datos = await cargarDatos();
+        // Buscar por coincidencia exacta de año y mes
+        const resultado = datos.find(item => {
+          const [anio, mesStr] = item.Fecha.split('-');
+          return anio === año && mesStr === numeroMes;
+        });
   
-      const resultado = datos.find(item => {
-        const [anioData, mesData] = item.fecha.split('-');
-        return anioData === año && mesData === mes;
-      });
-  
-      if (resultado) {
-        document.getElementById('dia-mayor').textContent = resultado.fecha;
-        document.getElementById('valor-mayor').textContent = resultado.total;
-      } else {
-        document.getElementById('dia-mayor').textContent = "No disponible";
-        document.getElementById('valor-mayor').textContent = "No disponible";
+        if (resultado) {
+          document.getElementById('dia-mayor').textContent = resultado.Fecha;
+          document.getElementById('valor-mayor').textContent = `$ ${parseFloat(resultado.TotalDia).toLocaleString('es-MX', {minimumFractionDigits: 2})}`;
+        } else {
+          document.getElementById('dia-mayor').textContent = "No encontrado";
+          document.getElementById('valor-mayor').textContent = "--";
+        }
+      } catch (error) {
+        console.error("Error al cargar el JSON:", error);
       }
     }
   
-    // Ejecutar al cargar la página
-    window.addEventListener('DOMContentLoaded', actualizarResumen);
+    window.addEventListener('DOMContentLoaded', cargarDatos);
   </script>
-
+   
 </body>
-
 </html>
+
+

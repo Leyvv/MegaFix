@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 from sqlalchemy import create_engine, text
 
 # Configurar conexión a MySQL
@@ -13,15 +14,15 @@ try:
     conn = engine.connect()
     conn.execute(text("SELECT 1"))
     print("✅ Conexión a MySQL exitosa.")
-    conn.close()
 except Exception as e:
     print("❌ Error al conectar a la base de datos:", e)
+    exit()
 
-# Consulta SQL para obtener el día más vendido por mes y su total
+# Consulta SQL: día más vendido por mes entre 2020 y 2024
 query = """
 SELECT V.Fecha, V.TotalDia
 FROM (
-    SELECT 
+    SELECT
         Fecha,
         SUM(GRAN_TOTAL) AS TotalDia,
         ROW_NUMBER() OVER (PARTITION BY YEAR(Fecha), MONTH(Fecha) ORDER BY SUM(GRAN_TOTAL) DESC) AS rn
@@ -32,18 +33,19 @@ FROM (
 WHERE V.rn = 1;
 """
 
-# Leer los resultados a un DataFrame
+# Ejecutar consulta y guardar resultado en DataFrame
 df = pd.read_sql(query, engine)
-print("✅ Datos obtenidos correctamente.")
-print("Total de días más vendidos:", len(df))
+print(df)
 
-# Procesar datos para formato JSON
-df["Fecha"] = pd.to_datetime(df["Fecha"]).dt.strftime("%Y-%m-%d")
-df["TotalDia"] = df["TotalDia"].map(lambda x: round(x, 2))
+# Convertir la columna Fecha a string (formato YYYY-MM-DD)
+df["Fecha"] = df["Fecha"].astype(str)
 
-# Guardar los resultados como JSON
-output_file = "dias_mas_vendidos.json"
-df.to_json(output_file, orient="records", indent=4, force_ascii=False)
+# Convertir a lista de diccionarios
+resultados = df.to_dict(orient="records")
 
-print(f"✅ Datos guardados en el archivo {output_file}")
+# Guardar como archivo JSON en la ruta especificada
+output_path = "dash/static/graficas/mayores_dias_venta.json"
+with open(output_path, "w", encoding="utf-8") as f:
+    json.dump(resultados, f, ensure_ascii=False, indent=4)
 
+print(f"✅ Datos guardados en '{output_path}'")
