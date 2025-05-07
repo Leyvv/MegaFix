@@ -16,8 +16,9 @@
         <ul class="menu">
             <li class="section">Pages</li>
             <li><a href="{% url 'dash:home' %}"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+            
             <li class="section">Contenidos</li>
+            <li>Mensualidad</li>
             <select id="año">
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
@@ -42,6 +43,8 @@
               </select>
               
               <button id="btn-ir">Ir</button>
+
+
 
               <script>
                 // Cargar selección al abrir la página
@@ -71,12 +74,49 @@
                 });
               </script>
 
+<li>Anualidad</li>
+<select id="año">
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+  </select>
+
+  <button id="btn-ir2">Ir</button>
+
+
+
+  <script>
+    // Cargar selección al abrir la página
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedYear = localStorage.getItem('añoSeleccionado');
+      
+      if (savedYear) {
+        document.getElementById('año').value = savedYear;
+      }
+  
+      // Ya no se carga el mes
+    });
+  
+    // Guardar selección al hacer clic en el botón
+    document.getElementById('btn-ir2').addEventListener('click', () => {
+      const año = document.getElementById('año').value;
+      
+      localStorage.setItem('añoSeleccionado', año);
+      
+      // Ya no se guarda el mes
+  
+      console.log(`Año: ${año}`);
+    });
+  </script>
+
             <li><a href="{% url 'dash:comparaciones' %}"><i class="fas fa-exchange-alt"></i> Comparaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-line"></i> Predicciones</a></li>
             <li class="section">Sesión</li>
             <li><a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
             
-            <li><a href="#"><i class="fas fa-user-plus"></i> Registrar Persona</a></li>
+            
         </ul>
     </div>
     <div class="content" id="main-content">
