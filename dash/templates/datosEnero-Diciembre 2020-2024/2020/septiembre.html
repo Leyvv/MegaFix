@@ -1,6 +1,7 @@
 {% extends 'dash/base.html' %}
 {% load static %}
 {% block content %}
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -10,49 +11,53 @@
   }
 
   .top-section {
-    margin-bottom: 0;
-  }
-
-  .main-section {
-    display: flex;
-    gap: 15px;
-    justify-content: space-between;
-  }
+      margin: 0;
+      padding: 0;
+    }
 
   .chart-container {
-    flex: 2;
-    padding: 10px;
-    height: 440px;
-    border: 1px solid #ccc;
+  width: 99%;         /* Cambia de 90% a 100% */
+  max-width: none;     /* Elimina el límite */
+  height: 650px;       /* Puedes ajustar la altura también si deseas */
+  margin: 10px auto 30px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+  .chart-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 
   .side-boxes {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
   }
 
   .box {
-    padding: 20px;
+    padding: 25px;
     border-radius: 15px;
     color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 18px;
     display: flex;
     align-items: center;
-    font-weight: bold;
-    font-size: 16px;
-    gap: 10px;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s ease-in-out;
   }
 
   .box:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   }
 
@@ -60,113 +65,51 @@
     font-size: 22px;
   }
 
-  .box:nth-child(1) {background-color: #4CAF50;}
-  .box:nth-child(2) {background-color: #2196F3;}
-  .box:nth-child(3) {background-color: #FF9800;}
-  .box:nth-child(4) {background-color: #9C27B0;}
-  .box:nth-child(5) {background-color: #E91E63;}
-  .box:nth-child(6) {background-color: #607D8B;}
-
-  iframe {
-    border: none;
-    border-radius: 10px;
-    display: block;
-  }
+  .box:nth-child(1) { background-color: #4CAF50; }
+  .box:nth-child(2) { background-color: #2196F3; }
+  .box:nth-child(3) { background-color: #FF9800; }
+  .box:nth-child(4) { background-color: #9C27B0; }
+  .box:nth-child(5) { background-color: #E91E63; }
+  .box:nth-child(6) { background-color: #607D8B; }
+  .box:nth-child(7) { background-color: #009688; }
+  .box:nth-child(8) { background-color: #3F51B5; }
+  .box:nth-child(9) { background-color: #795548; }
+  .box:nth-child(10) { background-color: #CDDC39; color: black; }
 
   .top-section iframe {
-    width: 100%;
-    height: 220px;
-  }
+      display: block;
+      width: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
 
-  .chart-container iframe {
-    width: 100%;
-    height: 100%;
-  }
 </style>
 
 <div class="top-section">
-  <iframe src="/static/graficas/resumen_datos.html?v={% now 'U' %}" width="100%" height="600px"></iframe>
+  <iframe src="/static/graficas/resumen_datos.html?v={% now 'U' %}"></iframe>
 </div>
 
-<div class="main-section">
-  <div class="chart-container">
-    <!-- Asegúrate de que la ruta sea correcta para tu archivo estático 'grafica_Febrero2020.html' -->
-    <iframe
-      src="{% static 'graficas/grafica_Septiembre2020.html' %}"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-      allowfullscreen
-    ></iframe>
-  </div>
-
-  <div class="side-boxes">
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/Tubo22mmPPR.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>TUBO DE PPR 20MM 1/2 X 4MTS</strong></div>
-        <div>343 pz</div>
-        <div>$ 12,168.09</div>
-      </div>
-    </div>
-    
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>CODO 90° DE PPR 3/4 25MM</strong></div>
-        <div>341 pz</div>
-        <div>$ 1,076.26</div>
-      </div>
-    </div>
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>CODO 90° DE PPR 1/2 20MM</strong></div>
-        <div>272 pz</div>
-        <div>$619.35</div>
-      </div>
-    </div>
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/tubo_currugado.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>TUBO CORRUGADO FLEXIBLE 3/4 VOLTECH</strong></div>
-        <div>250 pz</div>
-        <div>$1, 034.5</div>
-      </div>
-    </div>
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/mangera 3 capas.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>MANGUERA 1 REFORZADA 3 CAPAS</strong></div>
-        <div>228 pz</div>
-        <div>$4,602.1</div>
-      </div>
-    </div>
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/Tubo22mmPPR.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>TUBO DE PPR 25MM 3/4 X 4MTS</strong></div>
-        <div>179 pz</div>
-        <div>$11,234.19</div>
-      </div>
-    </div>
-  </div>
+<div class="chart-container">
+  <iframe
+    src="{% static 'graficas/grafica_Septiembre2020.html' %}"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+    allowfullscreen
+  ></iframe>
 </div>
+
+<div class="side-boxes">
+  <div class="box"><i class="fas fa-chart-line"></i> Ventas</div>
+  <div class="box"><i class="fas fa-dollar-sign"></i> Ingresos</div>
+  <div class="box"><i class="fas fa-box"></i> Productos</div>
+  <div class="box"><i class="fas fa-users"></i> Clientes</div>
+  <div class="box"><i class="fas fa-shopping-cart"></i> Compras</div>
+  <div class="box"><i class="fas fa-star"></i> Favoritos</div>
+  <div class="box"><i class="fas fa-percent"></i> Descuentos</div>
+  <div class="box"><i class="fas fa-truck"></i> Envíos</div>
+  <div class="box"><i class="fas fa-sync"></i> Devoluciones</div>
+  <div class="box"><i class="fas fa-calendar-alt"></i> Fechas</div>
+</div>
+
 {% endblock %}

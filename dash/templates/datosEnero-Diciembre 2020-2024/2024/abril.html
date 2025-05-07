@@ -1,15 +1,115 @@
 {% extends 'dash/base.html' %}
 {% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    buenoooo
-</body>
-</html>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 10px;
+  }
+
+  .top-section {
+      margin: 0;
+      padding: 0;
+    }
+
+  .chart-container {
+  width: 99%;         /* Cambia de 90% a 100% */
+  max-width: none;     /* Elimina el límite */
+  height: 650px;       /* Puedes ajustar la altura también si deseas */
+  margin: 10px auto 30px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+  .chart-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+  }
+
+  .side-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+  }
+
+  .box {
+    padding: 25px;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s ease-in-out;
+  }
+
+  .box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .box i {
+    font-size: 22px;
+  }
+
+  .box:nth-child(1) { background-color: #4CAF50; }
+  .box:nth-child(2) { background-color: #2196F3; }
+  .box:nth-child(3) { background-color: #FF9800; }
+  .box:nth-child(4) { background-color: #9C27B0; }
+  .box:nth-child(5) { background-color: #E91E63; }
+  .box:nth-child(6) { background-color: #607D8B; }
+  .box:nth-child(7) { background-color: #009688; }
+  .box:nth-child(8) { background-color: #3F51B5; }
+  .box:nth-child(9) { background-color: #795548; }
+  .box:nth-child(10) { background-color: #CDDC39; color: black; }
+
+  .top-section iframe {
+      display: block;
+      width: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+</style>
+
+<div class="top-section">
+  <iframe src="/static/graficas/resumen_datos.html?v={% now 'U' %}"></iframe>
+</div>
+
+<div class="chart-container">
+  <iframe
+    src="{% static 'graficas/grafica_Abril2024.html' %}"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<div class="side-boxes">
+  <div class="box"><i class="fas fa-chart-line"></i> Ventas</div>
+  <div class="box"><i class="fas fa-dollar-sign"></i> Ingresos</div>
+  <div class="box"><i class="fas fa-box"></i> Productos</div>
+  <div class="box"><i class="fas fa-users"></i> Clientes</div>
+  <div class="box"><i class="fas fa-shopping-cart"></i> Compras</div>
+  <div class="box"><i class="fas fa-star"></i> Favoritos</div>
+  <div class="box"><i class="fas fa-percent"></i> Descuentos</div>
+  <div class="box"><i class="fas fa-truck"></i> Envíos</div>
+  <div class="box"><i class="fas fa-sync"></i> Devoluciones</div>
+  <div class="box"><i class="fas fa-calendar-alt"></i> Fechas</div>
+</div>
+
 {% endblock %}

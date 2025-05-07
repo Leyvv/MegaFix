@@ -22,7 +22,7 @@ except Exception as e:
 query = """
     SELECT Fecha, GRAN_TOTAL 
     FROM Ventas 
-    WHERE Fecha BETWEEN '2022-12-01' AND '2022-12-31';
+    WHERE Fecha BETWEEN '2024-12-01' AND '2024-12-31';
 """
 df = pd.read_sql(query, engine)
 print(df.head())
@@ -39,7 +39,7 @@ fig = px.bar(
     df_grouped,
     x="GRAN_TOTAL",
     y="dia",
-    title="Ventas por Día en Diciembre 2022",
+    title="Ventas por Día en Diciembre 2024",
     orientation="h",
     labels={"dia": "Día", "GRAN_TOTAL": "Ventas Totales"}
 )
@@ -52,5 +52,5 @@ fig.update_layout(
 )
 
 # Guardar como HTML
-fig.write_html("dash/static/graficas/grafica_Diciembre2022.html")
-print("Gráfico horizontal guardado como 'dash/static/graficas/grafica_Diciembre2022.html'")
+fig.write_html("dash/static/graficas/grafica_Diciembre2024.html")
+print("Gráfico horizontal guardado como 'dash/static/graficas/grafica_Diciembre2024.html'")

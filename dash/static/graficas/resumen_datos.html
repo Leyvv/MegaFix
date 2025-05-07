@@ -5,88 +5,76 @@
   <title>Resumen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
-<style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  body {
-    font-family: 'Roboto', sans-serif;
-    color: #1a1a1a;
-    padding: 40px 20px;
-  }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 15px;
+      max-width: 1200px;
+      margin: auto;
+    }
 
-  .container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 30px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
+    .box {
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+    }
 
-  .box {
-    background: linear-gradient(135deg, #e0eafc, #cfdef3);
-    border-radius: 20px;
-    padding: 25px 30px;
-    width: 100%;
-    max-width: 360px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
+    .box i {
+      font-size: 22px;
+    }
 
-  .box:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-  }
+    .content {
+      display: flex;
+      flex-direction: column;
+    }
 
-  .box i {
-    font-size: 34px;
-    color: #1a73e8;
-    transition: color 0.3s ease;
-  }
+    .label {
+      font-size: 13px;
+      font-weight: 700;
+    }
 
-  .box .content {
-    display: flex;
-    flex-direction: column;
-  }
+    .value {
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
 
-  .box .label {
-    font-size: 16px;
-    font-weight: 700;
-    color: #1a1a1a;
-  }
+    /* Degradado progresivo: claro y suave */
+  .box:nth-child(6n+1) { background: linear-gradient(135deg, #f6c5a4, #f9d4b7); color: #3b3b3b; }
+  .box:nth-child(6n+2) { background: linear-gradient(135deg, #f9d4b7, #fae0c5); color: #3b3b3b; }
+  .box:nth-child(6n+3) { background: linear-gradient(135deg, #fae0c5, #fdf0db); color: #3b3b3b; }
+  .box:nth-child(6n+4) { background: linear-gradient(135deg, #fdf0db, #fff5e8); color: #2f2f2f; }
+  .box:nth-child(6n+5) { background: linear-gradient(135deg, #fff5e8, #fdfcf9); color: #2f2f2f; }
+  .box:nth-child(6n+6) { background: linear-gradient(135deg, #fdfcf9, #ffffff); color: #2f2f2f; }
 
-  .box .value {
-    font-size: 22px;
-    font-weight: 500;
-    color: #1a1a1a;
-    margin-top: 4px;
-  }
+    .box:hover {
+      transform: translateY(-4px);
+    }
 
-  /* Colores personalizados para cada tarjeta */
-  .box:nth-child(1) {
-    background: linear-gradient(135deg, #ffe29f, #ffa99f);
-  }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-  .box:nth-child(1) i {
-    color: #e67e22;
-  }
-
-  .box:nth-child(2) {
-    background: linear-gradient(135deg, #b2fefa, #0ed2f7);
-  }
-
-  .box:nth-child(2) i {
-    color: #16a085;
-  }
-</style>
+    @media (max-width: 480px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </head>
 <body>
@@ -95,69 +83,78 @@
       <i class="fas fa-calendar-day"></i>
       <div class="content">
         <div class="label">Día más vendido</div>
-        <div class="value" id="dia-mayor">---</div>
       </div>
     </div>
+    <div class="box"><div class="content"><div class="value" id="dia-mayor1">---</div></div></div>
+    <div class="box"><div class="content"><div class="value" id="dia-mayor2">---</div></div></div>
+    <div class="box"><div class="content"><div class="value" id="dia-mayor3">---</div></div></div>
+    <div class="box"><div class="content"><div class="value" id="dia-mayor4">---</div></div></div>
+    <div class="box"><div class="content"><div class="value" id="dia-mayor5">---</div></div></div>
 
     <div class="box">
       <i class="fas fa-dollar-sign"></i>
       <div class="content">
         <div class="label">Total</div>
-        <div class="value" id="valor-mayor">---</div>
       </div>
     </div>
+    <div class="box"><div class="content"><div class="value" id="valor-mayor1">---</div></div></div>
+    <div class="box"><div class="content"><div class="value" id="valor-mayor2">---</div></div></div>
+    <div class="box"><div class="content"><div class="value" id="valor-mayor3">---</div></div></div>
+    <div class="box"><div class="content"><div class="value" id="valor-mayor4">---</div></div></div>
+    <div class="box"><div class="content"><div class="value" id="valor-mayor5">---</div></div></div>
   </div>
 
   <script>
     async function cargarDatos() {
       const año = localStorage.getItem('añoSeleccionado');
       const mes = localStorage.getItem('mesSeleccionado');
-  
-      if (!año || !mes) return;
-  
+
+      if (!año || !mes) {
+        console.error("No se ha seleccionado un mes o año");
+        return;
+      }
+
       const mapaMeses = {
-        "enero": "01",
-        "febrero": "02",
-        "marzo": "03",
-        "abril": "04",
-        "mayo": "05",
-        "junio": "06",
-        "julio": "07",
-        "agosto": "08",
-        "septiembre": "09",
-        "octubre": "10",
-        "noviembre": "11",
-        "diciembre": "12"
+        "enero": "01", "febrero": "02", "marzo": "03", "abril": "04", "mayo": "05", "junio": "06",
+        "julio": "07", "agosto": "08", "septiembre": "09", "octubre": "10", "noviembre": "11", "diciembre": "12"
       };
-  
+
       const numeroMes = mapaMeses[mes.toLowerCase()];
-  
+      if (!numeroMes) {
+        console.error("Mes no válido:", mes);
+        return;
+      }
+
       try {
         const response = await fetch("/static/graficas/mayores_dias_venta.json");
         const datos = await response.json();
-  
-        // Buscar por coincidencia exacta de año y mes
-        const resultado = datos.find(item => {
+
+        const resultados = datos.filter(item => {
           const [anio, mesStr] = item.Fecha.split('-');
           return anio === año && mesStr === numeroMes;
         });
-  
-        if (resultado) {
-          document.getElementById('dia-mayor').textContent = resultado.Fecha;
-          document.getElementById('valor-mayor').textContent = `$ ${parseFloat(resultado.TotalDia).toLocaleString('es-MX', {minimumFractionDigits: 2})}`;
-        } else {
-          document.getElementById('dia-mayor').textContent = "No encontrado";
-          document.getElementById('valor-mayor').textContent = "--";
+
+        if (resultados.length === 0) {
+          for (let i = 1; i <= 5; i++) {
+            document.getElementById(`dia-mayor${i}`).textContent = "No encontrado";
+            document.getElementById(`valor-mayor${i}`).textContent = "--";
+          }
+          return;
         }
+
+        resultados.sort((a, b) => b.TotalDia - a.TotalDia);
+        resultados.slice(0, 5).forEach((item, index) => {
+          const suffix = index + 1;
+          document.getElementById(`dia-mayor${suffix}`).textContent = item.Fecha;
+          document.getElementById(`valor-mayor${suffix}`).textContent = `$ ${parseFloat(item.TotalDia).toLocaleString('es-MX', { minimumFractionDigits: 2 })}`;
+        });
+
       } catch (error) {
         console.error("Error al cargar el JSON:", error);
       }
     }
-  
+
     window.addEventListener('DOMContentLoaded', cargarDatos);
   </script>
-   
 </body>
 </html>
-
-
