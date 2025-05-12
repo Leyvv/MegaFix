@@ -1,15 +1,221 @@
 {% extends 'dash/base.html' %}
 {% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    buenoooo
-</body>
-</html>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 10px;
+  }
+
+  .top-section {
+      margin: 0;
+      padding: 0;
+    }
+
+  .chart-container {
+  width: 99%;         /* Cambia de 90% a 100% */
+  max-width: none;     /* Elimina el límite */
+  height: 650px;       /* Puedes ajustar la altura también si deseas */
+  margin: 10px auto 30px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+  .chart-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+  }
+
+
+
+  .box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+
+
+  .box:nth-child(1) { background-color: #f69c72; }
+  .box:nth-child(2) { background-color: #f69c72; }
+  .box:nth-child(3) { background-color: #f69c72; }
+
+
+
+  .top-section iframe {
+      display: block;
+      width: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .side-boxes {
+  display: flex; /* Alinea los elementos en una fila horizontal */
+  justify-content: space-between; /* Asegura que haya espacio entre los elementos */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten si no caben en una línea */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  max-width: 800px; /* Establece un máximo ancho para las cajas */
+  margin: 0 auto; /* Centra las cajas en la página */
+}
+
+.box {
+  width: 30%; /* Ancho de las cajas (ajustado para que quepan mejor en una fila) */
+  height: 100px; /* Alto de la caja */
+  display: flex;
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  background-color: #ffffff; /* Fondo gris claro */
+  border: 1px solid #ffffff; /* Borde gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño de la fuente */
+  margin: 5px; /* Espacio alrededor de cada caja */
+  color: #ffffff;
+}
+
+.box i {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
+</style>
+
+<div class="top-section">
+  <iframe src="/static/graficas/resumen_datos.html?v={% now 'U' %}"></iframe>
+</div>
+
+<div class="chart-container">
+  <iframe
+    src="{% static 'graficas/grafica_Julio2024.html' %}"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<div class="side-boxes">
+
+  <div class="box"  style="font-size: 20px;"><i class="fas fa-chart"></i><div>
+    <div style="font-size: 30px; text-align: center;" font-family: sans-serif; >4,630</div>
+    <div style="font-family: sans-serif;
+    font-size: 150%;
+    font-style: oblique; font-size: 20px;" >Total de Artículos</div>
+  </div> </div>
+  <div class="box"   style="font-size: 20px; text-align: center;"><i class="fas fa"></i> <div>
+    <div style="font-size: 30px; text-align: center;" >$ 3,714,348.69</div>
+    <div style="font-family: sans-serif;
+    font-size: 150%;
+    font-style: oblique; font-size: 20px;">Ingreso Mensual</div>
+  </div></div>
+  <div class="box"  style="font-size: 20px;"><i class="fas fa"></i>
+    <div>
+      <div style="font-size: 30px; text-align: center;" >55,564</div>
+      <div style="font-family: sans-serif;
+      font-size: 150%;
+      font-style: oblique; font-size: 20px;" >Total de Unidades</div>
+    </div>
+   </div>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Articulo</th>
+      <th scope="col">Imagen</th>
+      <th scope="col">Unidades</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <th scope="row">1</th>
+      <td>CODO 90° DE PPR 1/2' 20MM</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+    <td>974</td>
+    <td>2788.16</td>
+  </tr>
+
+  <tr>
+    <th scope="row">2</th>
+    <td>CODO 90° DE PPR 3/4' 25MM</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     <td>773</td>
+      <td>2866.20</td>
+  </tr>
+  </tr>
+
+  <tr>
+    <th scope="row">3</th>
+    <td>Cordón dúplex flexible SPT 18 AWG bobina 500 m</td>
+      <td><img src="../../../static/img/cordon duplex.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     <td>500</td>
+      <td>2844.83</td>
+  </tr>
+
+  <tr>
+    <th scope="row">4</th>
+    <td>CINTA DE AISLAR # 33 18M NEGRA</td>
+      <td><img src="../../../static/img/cintanegra.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+    <td>410</td>
+            <td>5209.26</td>
+  </tr>
+
+  <tr>
+    <th scope="row">5</th>
+    <td>TUBO DE PPR 25MM 3/4' X 4MTS</td>
+      <td><img src="../../../static/img/Tubo22mmPPR.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     <td>372</td>
+      <td>22225.96</td>
+  </tr>
+
+  <tr>
+    <th scope="row">6</th>
+    <td>TUBO DE PPR 20MM 1/2' X 4MTS</td>
+      <td><img src="../../../static/img/Tubo22mmPPR.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     <td>362</td>
+      <td>14825.07</td>
+  </tr>
+  <tr>
+    <th scope="row">7</th>
+    <td>Metro de cuerda amarilla de 16mm en rollo de 264m</td>
+    <td><img src="../../../static/img/cuerda amarilla.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+  <td>309</td>
+            <td>2947.76</td>
+</tr>
+
+<tr>
+  <th scope="row">8</th>
+  <td>Cable de acero 3/16' 300 m</td>
+    <td><img src="../../../static/img/cable flexible.png" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+   <td>300</td>
+  <td>2844.83</td>
+</tr>
+
+<tr>
+  <th scope="row">9</th>
+  <td>Metro de cuerda amarilla de 10mm en rollo de 440m</td>
+    <td><img src="../../../static/img/cuerda amarilla.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+  <td>299</td>
+    <td>1370.58</td>
+</tr>
+
+<tr>
+  <th scope="row">10</th>
+    <td>TEE DE PPR SENCILLA  1/2 20MM</td>
+    <td><img src="../../../static/img/tee ppr.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+    <td>297</td>
+    <td>1110.00</td>
+</tr>
+  </tbody>
+</table>
+
+
 {% endblock %}

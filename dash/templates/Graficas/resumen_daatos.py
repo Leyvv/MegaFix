@@ -22,15 +22,19 @@ except Exception as e:
 query = """
 SELECT V.Fecha, V.TotalDia
 FROM (
-    SELECT
+    SELECT 
         Fecha,
         SUM(GRAN_TOTAL) AS TotalDia,
-        ROW_NUMBER() OVER (PARTITION BY YEAR(Fecha), MONTH(Fecha) ORDER BY SUM(GRAN_TOTAL) DESC) AS rn
+        ROW_NUMBER() OVER (
+            PARTITION BY YEAR(Fecha), MONTH(Fecha)
+            ORDER BY SUM(GRAN_TOTAL) DESC
+        ) AS rn
     FROM Ventas
     WHERE Fecha BETWEEN '2020-01-01' AND '2024-12-31'
     GROUP BY Fecha
 ) AS V
-WHERE V.rn = 1;
+WHERE V.rn <= 5
+ORDER BY YEAR(V.Fecha), MONTH(V.Fecha), V.rn;
 """
 
 # Ejecutar consulta y guardar resultado en DataFrame

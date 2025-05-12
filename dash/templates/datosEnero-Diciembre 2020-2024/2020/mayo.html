@@ -1,6 +1,7 @@
 {% extends 'dash/base.html' %}
 {% load static %}
 {% block content %}
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -10,49 +11,53 @@
   }
 
   .top-section {
-    margin-bottom: 0;
-  }
-
-  .main-section {
-    display: flex;
-    gap: 15px;
-    justify-content: space-between;
-  }
+      margin: 0;
+      padding: 0;
+    }
 
   .chart-container {
-    flex: 2;
-    padding: 10px;
-    height: 440px;
-    border: 1px solid #ccc;
+  width: 99%;         /* Cambia de 90% a 100% */
+  max-width: none;     /* Elimina el límite */
+  height: 650px;       /* Puedes ajustar la altura también si deseas */
+  margin: 10px auto 30px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+  .chart-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 
   .side-boxes {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
   }
 
   .box {
-    padding: 20px;
+    padding: 25px;
     border-radius: 15px;
     color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 18px;
     display: flex;
     align-items: center;
-    font-weight: bold;
-    font-size: 16px;
-    gap: 10px;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s ease-in-out;
   }
 
   .box:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   }
 
@@ -60,113 +65,187 @@
     font-size: 22px;
   }
 
-  .box:nth-child(1) {background-color: #4CAF50;}
-  .box:nth-child(2) {background-color: #2196F3;}
-  .box:nth-child(3) {background-color: #FF9800;}
-  .box:nth-child(4) {background-color: #9C27B0;}
-  .box:nth-child(5) {background-color: #E91E63;}
-  .box:nth-child(6) {background-color: #607D8B;}
 
-  iframe {
-    border: none;
-    border-radius: 10px;
-    display: block;
-  }
 
   .top-section iframe {
-    width: 100%;
-    height: 220px;
-  }
+      display: block;
+      width: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+  .box:nth-child(1) { background-color: #f69c72; }
+  .box:nth-child(2) { background-color: #f69c72; }
+  .box:nth-child(3) { background-color: #f69c72; }
+    .side-boxes {
+  display: flex; /* Alinea los elementos en una fila horizontal */
+  justify-content: space-between; /* Asegura que haya espacio entre los elementos */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten si no caben en una línea */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  max-width: 800px; /* Establece un máximo ancho para las cajas */
+  margin: 0 auto; /* Centra las cajas en la página */
+}
 
-  .chart-container iframe {
-    width: 100%;
-    height: 100%;
-  }
+.box {
+  width: 30%; /* Ancho de las cajas (ajustado para que quepan mejor en una fila) */
+  height: 100px; /* Alto de la caja */
+  display: flex;
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  background-color: #f4f4f4; /* Fondo gris claro */
+  border: 1px solid #ddd; /* Borde gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño de la fuente */
+  margin: 5px; /* Espacio alrededor de cada caja */
+  color: #ffffff;
+}
+
+.box i {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
 </style>
 
 <div class="top-section">
-  <iframe src="/static/graficas/resumen_datos.html?v={% now 'U' %}" width="100%" height="600px"></iframe>
+  <iframe src="/static/graficas/resumen_datos.html?v={% now 'U' %}"></iframe>
 </div>
 
-<div class="main-section">
-  <div class="chart-container">
-    <!-- Asegúrate de que la ruta sea correcta para tu archivo estático 'grafica_Febrero2020.html' -->
-    <iframe
-      src="{% static 'graficas/grafica_Mayo2020.html' %}"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-      allowfullscreen
-    ></iframe>
-  </div>
-
-  <div class="side-boxes">
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/Tubo22mmPPR.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>TUBO DE PPR 20MM 1/2 X 4MTS</strong></div>
-        <div>343 pz</div>
-        <div>$ 12,168.09</div>
-      </div>
-    </div>
-    
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>CODO 90° DE PPR 3/4 25MM</strong></div>
-        <div>341 pz</div>
-        <div>$ 1,076.26</div>
-      </div>
-    </div>
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>CODO 90° DE PPR 1/2 20MM</strong></div>
-        <div>272 pz</div>
-        <div>$619.35</div>
-      </div>
-    </div>
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/tubo_currugado.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>TUBO CORRUGADO FLEXIBLE 3/4 VOLTECH</strong></div>
-        <div>250 pz</div>
-        <div>$1, 034.5</div>
-      </div>
-    </div>
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/mangera 3 capas.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>MANGUERA 1 REFORZADA 3 CAPAS</strong></div>
-        <div>228 pz</div>
-        <div>$4,602.1</div>
-      </div>
-    </div>
-    <div class="box" style="display: flex; align-items: center; gap: 10px;">
-      <!-- Imagen a la izquierda -->
-      <img src="../../../static/img/Tubo22mmPPR.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;">
-    
-      <!-- Contenido a la derecha -->
-      <div>
-        <div><strong>TUBO DE PPR 25MM 3/4 X 4MTS</strong></div>
-        <div>179 pz</div>
-        <div>$11,234.19</div>
-      </div>
-    </div>
-  </div>
+<div class="chart-container">
+  <iframe
+    src="{% static 'graficas/grafica_Mayo2020.html' %}"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+    allowfullscreen
+  ></iframe>
 </div>
+
+<div class="side-boxes">
+
+  <div class="box"  style="font-size: 20px;"><i class="fas fa-chart"></i><div>
+    <div style="font-size: 30px; text-align: center;" font-family: sans-serif; >2,980</div>
+    <div style="font-family: sans-serif;
+    font-size: 150%;
+    font-style: oblique; font-size: 20px;" >Total de Artículos</div>
+  </div> </div>
+  <div class="box"   style="font-size: 20px; text-align: center;"><i class="fas fa"></i> <div>
+    <div style="font-size: 30px; text-align: center;" >$ 1,374,251.37</div>
+    <div style="font-family: sans-serif;
+    font-size: 150%;
+    font-style: oblique; font-size: 20px;">Ingreso Mensual</div>
+  </div></div>
+  <div class="box"  style="font-size: 20px;"><i class="fas fa"></i>
+    <div>
+      <div style="font-size: 30px; text-align: center;" >22,031</div>
+      <div style="font-family: sans-serif;
+      font-size: 150%;
+      font-style: oblique; font-size: 20px;" >Total de Unidades</div>
+    </div>
+   </div>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Articulo</th>
+      <th scope="col">Imagen</th>
+      <th scope="col">Unidades</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <th scope="row">1</th>
+      <td>CODO 90 DE PPR 1/2' 20MM</td>
+      <td><img src="../../../static/img/cuerda amarilla.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     
+            <td>348</td>
+            <td>794.33</td>
+  </tr>
+
+  <tr>
+    <th scope="row">2</th>
+        <td>MANGUERA 1/2' PRETUL REFORZADA 3 CAPAS</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+ 
+            <td>208</td>
+            <td>1109.76</td>
+  </tr>
+
+  <tr>
+    <th scope="row">3</th>
+     <td>Cable cobre desnudo calibre 12 AWG 100 m</td>
+      <td><img src="../../../static/img/cable desnudo.png" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     
+            <td>200</td>
+            <td>1138.00</td>
+  </tr>
+
+  <tr>
+    <th scope="row">4</th>
+     <td>CODO 90 DE CPVC 13MM</td>
+      <td><img src="../../../static/img/codo cpvc.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+  
+            <td>174</td>
+            <td>233.93</td>
+  </tr>
+
+  <tr>
+    <th scope="row">5</th>
+     <td>CODO 90 DE CPVC 13MM</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+    
+            <td>174</td>
+            <td>233.93</td>
+  </tr>
+
+  <tr>
+    <th scope="row">6</th>
+       <td>CODO 90 DE PPR 3/4' 25MM</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+   
+            <td>171</td>
+            <td>539.23</td>
+  </tr>
+  <tr>
+    <th scope="row">7</th>
+        <td>DISCO CORTE FINO DE METAL TIPO 1 4-1/2' 1.2 MM PRETUL</td>
+    <td><img src="../../../static/img/discometal pretul.png" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+   
+            <td>168</td>
+            <td>1369.48</td>
+</tr>
+</tr>
+
+<tr>
+  <th scope="row">8</th>
+      <td>TUBO DE PPR 20MM 1/2' X 4MTS</td>
+    <td><img src="../../../static/img/Tubo22mmPPR.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+   
+            <td>156</td>
+            <td>6170.66</td>
+</tr>
+
+<tr>
+  <th scope="row">9</th>
+       <td>CABLE DE ACERO 1/8' R?GIDO</td>
+    <td><img src="../../../static/img/cable rigido.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+ 
+            <td>150</td>
+            <td>646.50</td>
+</tr>
+
+<tr>
+  <th scope="row">10</th>
+      <td>CINTA DE AISLAR # 33 18M NEGRA</td>
+    <td><img src="../../../static/img/cintanegra.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+    
+            <td>147</td>
+            <td>1667.36</td>
+</tr>
+  </tbody>
+</table>
+
+
 {% endblock %}
