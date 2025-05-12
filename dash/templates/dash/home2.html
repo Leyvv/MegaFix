@@ -1,11 +1,445 @@
-<!-- dash/templates/dash/home2.html -->
+{% extends 'dash/base.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home - Usuario Normal</title>
+    <title>Dashboard de Ventas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background-color: #2575fc;
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2575fc;
+        }
+        .metric-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .file-upload {
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .file-upload:hover {
+            border-color: #2575fc;
+            background-color: #f8f9fa;
+        }
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .highlight {
+            background-color: #e6f7ff;
+        }
+        .graph-container {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+        .year-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .year-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            background-color: #e0e0e0;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .year-btn:hover, .year-btn.active {
+            background-color: #343538;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .max-sales-panel {
+            background-color: #f8f9fa;
+            border-radius: 0 0 10px 10px;
+            padding: 15px;
+            text-align: center;
+            border-top: 2px solid #2575fc;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenido, usuario normal!</h1>
+    <div class="dashboard-header text-center">
+        <div class="container">
+            <h1><i class="fas fa-chart-line me-2"></i>Dashboard de Ventas</h1>
+            <p class="lead">Analiza tus datos de ventas anuales y diarias</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Selector de Años para Gráficas -->
+        <div class="year-selector">
+            <button class="year-btn active" onclick="showYear('2020')">2020</button>
+            <button class="year-btn" onclick="showYear('2021')">2021</button>
+            <button class="year-btn" onclick="showYear('2022')">2022</button>
+            <button class="year-btn" onclick="showYear('2023')">2023</button>
+            <button class="year-btn" onclick="showYear('2024')">2024</button>
+        </div>
+
+        <!-- Gráficas Anuales -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- 2020 -->
+                <div class="year-content" id="content-2020">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Ventas Mensuales 2020</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="graph-container">
+                                <iframe src="{% static 'graficas/grafica_2020.html' %}" style="width:100%; height:100%; border:none;"></iframe>
+                            </div>
+                            <div class="max-sales-panel">
+                                <div class="metric-label">MES CON MÁS VENTAS</div>
+                                <div class="metric-value">Dic 2020 - $2,350,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2021 -->
+                <div class="year-content" id="content-2021" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Ventas Mensuales 2021</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="graph-container">
+                                <iframe src="{% static 'graficas/grafica_2021.html' %}" style="width:100%; height:100%; border:none;"></iframe>
+                            </div>
+                            <div class="max-sales-panel">
+                                <div class="metric-label">MES CON MÁS VENTAS</div>
+                                <div class="metric-value">Mar 2021 - $2,450,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2022 -->
+                <div class="year-content" id="content-2022" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Ventas Mensuales 2022</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="graph-container">
+                                <iframe src="{% static 'graficas/grafica_2022.html' %}" style="width:100%; height:100%; border:none;"></iframe>
+                            </div>
+                            <div class="max-sales-panel">
+                                <div class="metric-label">MES CON MÁS VENTAS</div>
+                                <div class="metric-value">Dec 2022 - $2,400,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2023 -->
+                <div class="year-content" id="content-2023" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Ventas Mensuales 2023</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="graph-container">
+                                <iframe src="{% static 'graficas/grafica_2023.html' %}" style="width:100%; height:100%; border:none;"></iframe>
+                            </div>
+                            <div class="max-sales-panel">
+                                <div class="metric-label">MES CON MÁS VENTAS</div>
+                                <div class="metric-value">Dec 2023 - $3,420,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2024 -->
+                <div class="year-content" id="content-2024" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Ventas Mensuales 2024</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="graph-container">
+                                <iframe src="{% static 'graficas/grafica_2024.html' %}" style="width:100%; height:100%; border:none;"></iframe>
+                            </div>
+                            <div class="max-sales-panel">
+                                <div class="metric-label">MES CON MÁS VENTAS</div>
+                                <div class="metric-value">Dec 2024 - $4,990,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analizador de CSV -->
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-file-upload me-2"></i>Analizar Datos CSV</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="file-upload" id="fileUploadArea">
+                            <input type="file" id="csvFile" accept=".csv" class="d-none">
+                            <i class="fas fa-file-csv fa-3x mb-3" style="color: #2575fc;"></i>
+                            <h5>Arrastra y suelta tu archivo CSV aquí</h5>
+                            <p class="text-muted">o haz clic para seleccionar un archivo</p>
+                            <button class="btn btn-primary mt-2" onclick="document.getElementById('csvFile').click()">
+                                <i class="fas fa-folder-open me-2"></i>Seleccionar Archivo
+                            </button>
+                        </div>
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            El archivo CSV debe tener dos columnas: <strong>Fecha (YYYY-MM-DD)</strong> y <strong>Cantidad (numérica)</strong>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultados del CSV -->
+        <div class="row" id="metricsRow" style="display: none;">
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="metric-label">VENTAS TOTALES</div>
+                        <div class="metric-value" id="totalSales">$0</div>
+                        <i class="fas fa-dollar-sign fa-2x mt-2" style="color: #28a745;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="metric-label">PROMEDIO DIARIO</div>
+                        <div class="metric-value" id="avgSales">$0</div>
+                        <i class="fas fa-calculator fa-2x mt-2" style="color: #ffc107;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="metric-label">DÍA CON MÁS VENTAS</div>
+                        <div class="metric-value" id="maxSalesDay">-</div>
+                        <i class="fas fa-arrow-up fa-2x mt-2" style="color: #dc3545;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="metric-label">DÍA CON MENOS VENTAS</div>
+                        <div class="metric-value" id="minSalesDay">-</div>
+                        <i class="fas fa-arrow-down fa-2x mt-2" style="color: #17a2b8;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4" id="dataRow" style="display: none;">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-table me-2"></i>Datos de Ventas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="table table-striped table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Ventas</th>
+                                        <th>% del Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="salesTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Función para mostrar año seleccionado
+        function showYear(year) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.year-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Mostrar el contenido seleccionado
+            document.getElementById(`content-${year}`).style.display = 'block';
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.year-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Mostrar 2020 por defecto
+        document.addEventListener('DOMContentLoaded', function() {
+            showYear('2020');
+        });
+
+        // Funcionalidad del analizador CSV (se mantiene igual)
+        document.getElementById('csvFile').addEventListener('change', handleFileUpload);
+        
+        // Configurar drag and drop
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.borderColor = '#2575fc';
+            fileUploadArea.style.backgroundColor = '#e9f0ff';
+        });
+        
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.style.borderColor = '#dee2e6';
+            fileUploadArea.style.backgroundColor = '';
+        });
+        
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.borderColor = '#dee2e6';
+            fileUploadArea.style.backgroundColor = '';
+            if (e.dataTransfer.files.length) {
+                document.getElementById('csvFile').files = e.dataTransfer.files;
+                handleFileUpload({ target: document.getElementById('csvFile') });
+            }
+        });
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const contents = e.target.result;
+                processCSV(contents);
+            };
+            reader.readAsText(file);
+        }
+
+        function processCSV(csvText) {
+            const lines = csvText.split('\n');
+            const salesData = [];
+            
+            // Parsear CSV (saltando encabezados si existen)
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line && (i > 0 || isNaN(parseFloat(line.split(',')[1])))) {
+                    const parts = line.split(',');
+                    if (parts.length >= 2) {
+                        const date = parts[0].trim();
+                        const amount = parseFloat(parts[1].trim());
+                        if (!isNaN(amount)) {
+                            salesData.push({ date, amount });
+                        }
+                    }
+                }
+            }
+            
+            if (salesData.length === 0) {
+                alert('No se encontraron datos válidos en el archivo CSV.');
+                return;
+            }
+            
+            // Calcular métricas
+            const total = salesData.reduce((sum, item) => sum + item.amount, 0);
+            const average = total / salesData.length;
+            
+            // Encontrar día con más y menos ventas
+            let maxSale = salesData[0];
+            let minSale = salesData[0];
+            
+            salesData.forEach(item => {
+                if (item.amount > maxSale.amount) maxSale = item;
+                if (item.amount < minSale.amount) minSale = item;
+            });
+            
+            // Mostrar métricas
+            document.getElementById('totalSales').textContent = `$${total.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('avgSales').textContent = `$${average.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('maxSalesDay').textContent = `${maxSale.date} ($${maxSale.amount.toLocaleString('es-ES')})`;
+            document.getElementById('minSalesDay').textContent = `${minSale.date} ($${minSale.amount.toLocaleString('es-ES')})`;
+            
+            // Mostrar tabla de datos
+            const tableBody = document.getElementById('salesTableBody');
+            tableBody.innerHTML = '';
+            
+            salesData.forEach(item => {
+                const row = document.createElement('tr');
+                if (item.date === maxSale.date) row.classList.add('table-success');
+                if (item.date === minSale.date) row.classList.add('table-danger');
+                
+                const percentage = (item.amount / total * 100).toFixed(2);
+                
+                row.innerHTML = `
+                    <td>${item.date}</td>
+                    <td>$${item.amount.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: ${percentage}%" 
+                                aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100">
+                                ${percentage}%
+                            </div>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Mostrar secciones ocultas
+            document.getElementById('metricsRow').style.display = 'flex';
+            document.getElementById('dataRow').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
-
+{% endblock %}

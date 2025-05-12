@@ -112,11 +112,17 @@
   </script>
 
             <li><a href="{% url 'dash:comparaciones' %}"><i class="fas fa-exchange-alt"></i> Comparaciones</a></li>
-            <li><a href="#"><i class="fas fa-chart-line"></i> Predicciones</a></li>
             <li class="section">Sesión</li>
-            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-            
-            
+            <div class="sidebar-section">
+              <li>
+                  <form class="logout-form" method="post" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button type="submit" class="logout-btn">
+                          <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                      </button>
+                  </form>
+              </li>
+          </div>
         </ul>
     </div>
     <div class="content" id="main-content">
