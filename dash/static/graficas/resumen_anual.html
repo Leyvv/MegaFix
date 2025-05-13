@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .chart-container {
+            width: 98%;
+            max-width: none;
+            height: 650px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            background: #fff;
+        }
+
+        .chart-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .side-boxes {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto 40px auto;
+        }
+
+        .side-boxes-horizontal {
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            flex: 1;
+            min-width: 240px;
+            padding: 20px 25px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
+        }
+
+        .box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .box i {
+            font-size: 22px;
+        }
+
+        .box-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .green {
+            background-color: #4CAF50;
+        }
+
+        .blue {
+            background-color: #2196F3;
+        }
+
+        .orange {
+            background-color: #FF9800;
+        }
+
+        @media (max-width: 768px) {
+            .side-boxes-horizontal {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .box {
+                width: 100%;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</head>
+
+<body>
+    <!-- TOP CARDS -->
+    <div class="side-boxes side-boxes-horizontal">
+        <div class="box green">
+            <div>
+                <div class="box-label"><i class="fas fa-calendar-day"></i> Día más vendido</div>
+                <div class="value" id="dia-mayor">---</div>
+            </div>
+        </div>
+        <div class="box blue">
+            <div>
+                <div class="box-label"><i class="fas fa-calendar"></i> Mes más vendido</div>
+                <div class="value" id="mes-mayor">---</div>
+            </div>
+        </div>
+        <div class="box orange">
+            <div>
+                <div class="box-label"><i class="fas fa-dollar-sign"></i> Total anual</div>
+                <div class="value" id="total-anual">---</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function cargarResumenAnual() {
+            const año = localStorage.getItem('añoAnualSeleccionado');
+            if (!año) {
+                console.error("No se ha seleccionado un año");
+                return;
+            }
+
+            try {
+                // Día más vendido
+                const diaResponse = await fetch("/static/graficas/dia_mas_vendido.json");
+                const dias = await diaResponse.json();
+                const diaDelAño = dias.find(item => {
+                    const añoItem = new Date(item.Fecha).getFullYear().toString();
+                    return añoItem === año;
+                });
+                if (diaDelAño) {
+                    document.getElementById("dia-mayor").textContent =
+                        `${diaDelAño.Fecha} - $ ${parseFloat(diaDelAño.TotalDia).toLocaleString('es-MX', { minimumFractionDigits: 2 })}`;
+                } else {
+                    document.getElementById("dia-mayor").textContent = "No encontrado";
+                }
+
+                // Mes más vendido
+                const mesResponse = await fetch("/static/graficas/mes_mas_vendido.json");
+                const meses = await mesResponse.json();
+                const mesDelAño = meses.find(item => {
+                    const añoItem = new Date(item.Mes + "-01").getFullYear().toString();
+                    return añoItem === año;
+                });
+                if (mesDelAño) {
+                    document.getElementById("mes-mayor").textContent =
+                        `${mesDelAño.Mes} - $ ${parseFloat(mesDelAño.TotalMes).toLocaleString('es-MX', { minimumFractionDigits: 2 })}`;
+                } else {
+                    document.getElementById("mes-mayor").textContent = "No encontrado";
+                }
+
+                // Ganancia anual
+                const gananciaResponse = await fetch("/static/graficas/ganancia_anual.json");
+                const ganancias = await gananciaResponse.json();
+                const gananciaDelAño = ganancias.find(item => item.Año.toString() === año);
+                if (gananciaDelAño) {
+                    document.getElementById("total-anual").textContent =
+                        `$ ${parseFloat(gananciaDelAño.TotalGananciaAnual).toLocaleString('es-MX', { minimumFractionDigits: 2 })}`;
+                } else {
+                    document.getElementById("total-anual").textContent = "No encontrado";
+                }
+            } catch (error) {
+                console.error("Error cargando los datos del resumen anual:", error);
+            }
+        }
+
+        cargarResumenAnual();
+    </script>
+</body>
+
+</html>

@@ -1,17 +1,17 @@
-# dash/views.py
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from dash.templates.Graficas.comp import generar_html_comparacion
 from django.http import Http404
+from django.template.exceptions import TemplateDoesNotExist
 
 @login_required
 def homeView(request):
-    return render(request, 'dash/home.html')  # Redirige a home.html para superusuarios
+    return render(request, 'dash/home.html')
 
 @login_required
 def home2View(request):
-    return render(request, 'dash/home2.html')  # Redirige a home2.html para usuarios normales
+    return render(request, 'dash/home2.html')
 
 def comparaciones(request):
     return render(request, 'dash/comparaciones.html')
@@ -28,7 +28,7 @@ def comparar_ventas(request):
         return JsonResponse({'status': 'ok'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
-    
+
 def ver_datos_mes(request, anio, mes):
     template = f'datosEnero-Diciembre 2020-2024/{anio}/{mes}.html'
     return render(request, template)
@@ -36,32 +36,26 @@ def ver_datos_mes(request, anio, mes):
 def ver_comparacion(request):
     año = request.GET.get("año")
     mes = request.GET.get("mes")
-    # Podrías redirigir o renderizar directamente una plantilla con esos datos
-    return render(request, f'datosEnero-Diciembre 2020-2024/{año}/{mes}.html')
 
+    if not año or not mes:
+        return render(request, 'error.html', {'mensaje': 'Año o mes no proporcionado'})
 
-    with connection.cursor() as cursor:
-        cursor.execute("""
-            SELECT 
-                DAY(fecha) AS dia,
-                DAYNAME(fecha) AS dia_semana,
-                gran_total
-            FROM ventas
-            WHERE fecha BETWEEN '2020-01-02' AND '2020-01-31'
-            ORDER BY gran_total DESC
-            LIMIT 1
-        """)
-        resultado = cursor.fetchone()
-        if resultado:
-            dia, dia_semana, cantidad = resultado
-        else:
-            dia, dia_semana, cantidad = None, None, None
-    
-    print(resultado)
+    template_name = f'datosEnero-Diciembre 2020-2024/{año}/{mes}.html'
 
-    return render(request, 'datosEnero-Diciembre 2020-2024/2020/agosto.html', {
-        'dia': dia,
-        'dia_semana': dia_semana,
-        'cantidad': cantidad
-    })
+    try:
+        return render(request, template_name)
+    except TemplateDoesNotExist:
+        return render(request, 'error.html', {'mensaje': f'La plantilla {template_name} no se encontró'})
 
+def ver_comparacion_anual(request):
+    año = request.GET.get('año')
+
+    if not año:
+        return render(request, 'error.html', {'mensaje': 'Año no proporcionado'})
+
+    template_name = f'datosAnualidad/{año}.html'
+
+    try:
+        return render(request, template_name)
+    except TemplateDoesNotExist:
+        return render(request, 'error.html', {'mensaje': f'La plantilla para el año {año} no se encontró'})

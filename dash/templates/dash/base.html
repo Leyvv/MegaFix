@@ -1,136 +1,108 @@
 {% load static %}
-<!-- dash/templates/dash/home.html -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Megafix</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Megafix</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
-    <div class="sidebar" >
-        <h2><i class="fas fa-tachometer-alt"></i> MEGAFIX</h2>
-        <ul class="menu">
-            <li class="section">Pages</li>
-            <li><a href="{% url 'dash:home' %}"><i class="fas fa-home"></i> Dashboard</a></li>
-            
-            <li class="section">Contenidos</li>
-            <li>Mensualidad</li>
-            <select id="año">
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-              </select>
-              
-              <select id="mes">
-                <option value="enero">Enero</option>
-                <option value="febrero">Febrero</option>
-                <option value="marzo">Marzo</option>
-                <option value="abril">Abril</option>
-                <option value="mayo">Mayo</option>
-                <option value="junio">Junio</option>
-                <option value="julio">Julio</option>
-                <option value="agosto">Agosto</option>
-                <option value="septiembre">Septiembre</option>
-                <option value="octubre">Octubre</option>
-                <option value="noviembre">Noviembre</option>
-                <option value="diciembre">Diciembre</option>
-              </select>
-              
-              <button id="btn-ir">Ir</button>
+  <div class="sidebar">
+    <h2><i class="fas fa-tachometer-alt"></i> MEGAFIX</h2>
+    <ul class="menu">
+      <li class="section">Pages</li>
+      <li><a href="{% url 'dash:home' %}"><i class="fas fa-home"></i> Dashboard</a></li>
 
+      <li class="section">Contenidos</li>
+      <li>Mensualidad</li>
+      <select id="año">
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
 
+      <select id="mes">
+        <option value="enero">Enero</option>
+        <option value="febrero">Febrero</option>
+        <option value="marzo">Marzo</option>
+        <option value="abril">Abril</option>
+        <option value="mayo">Mayo</option>
+        <option value="junio">Junio</option>
+        <option value="julio">Julio</option>
+        <option value="agosto">Agosto</option>
+        <option value="septiembre">Septiembre</option>
+        <option value="octubre">Octubre</option>
+        <option value="noviembre">Noviembre</option>
+        <option value="diciembre">Diciembre</option>
+      </select>
 
-              <script>
-                // Cargar selección al abrir la página
-                window.addEventListener('DOMContentLoaded', () => {
-                  const savedYear = localStorage.getItem('añoSeleccionado');
-                  const savedMonth = localStorage.getItem('mesSeleccionado');
-              
-                  if (savedYear) {
-                    document.getElementById('año').value = savedYear;
-                  }
-              
-                  if (savedMonth) {
-                    document.getElementById('mes').value = savedMonth;
-                  }
-                });
-              
-                // Guardar selección al hacer clic en el botón
-                document.getElementById('btn-ir').addEventListener('click', () => {
-                  const año = document.getElementById('año').value;
-                  const mes = document.getElementById('mes').value;
-              
-                  localStorage.setItem('añoSeleccionado', año);
-                  localStorage.setItem('mesSeleccionado', mes);
-              
-                  // Aquí puedes hacer otra lógica, como enviar una consulta o recargar datos
-                  console.log(`Año: ${año}, Mes: ${mes}`);
-                });
-              </script>
+      <button id="btn-ir">Ir</button>
 
-<li>Anualidad</li>
-<select id="año">
-    <option value="2020">2020</option>
-    <option value="2021">2021</option>
-    <option value="2022">2022</option>
-    <option value="2023">2023</option>
-    <option value="2024">2024</option>
-  </select>
+      <li>Anualidad</li>
+      <select id="añoAnual">
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
+      <button id="btn-ir2">Ir</button>
 
-  <button id="btn-ir2">Ir</button>
+      <li><a href="{% url 'dash:comparaciones' %}"><i class="fas fa-exchange-alt"></i> Comparaciones</a></li>
+      <li><a href="#"><i class="fas fa-chart-line"></i> Predicciones</a></li>
+      <li class="section">Sesión</li>
+      <li><a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+    </ul>
+  </div>
 
+  <div class="content" id="main-content">
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
 
-
+  <!-- Scripts -->
   <script>
-    // Cargar selección al abrir la página
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cargar selección guardada
       const savedYear = localStorage.getItem('añoSeleccionado');
-      
-      if (savedYear) {
-        document.getElementById('año').value = savedYear;
-      }
-  
-      // Ya no se carga el mes
-    });
-  
-    // Guardar selección al hacer clic en el botón
-    document.getElementById('btn-ir2').addEventListener('click', () => {
-      const año = document.getElementById('año').value;
-      
-      localStorage.setItem('añoSeleccionado', año);
-      
-      // Ya no se guarda el mes
-  
-      console.log(`Año: ${año}`);
+      const savedMonth = localStorage.getItem('mesSeleccionado');
+      const savedAnualYear = localStorage.getItem('añoAnualSeleccionado');
+
+      if (savedYear) document.getElementById('año').value = savedYear;
+      if (savedMonth) document.getElementById('mes').value = savedMonth;
+      if (savedAnualYear) document.getElementById('añoAnual').value = savedAnualYear;
+
+      // Botón Mensualidad
+      document.getElementById('btn-ir').addEventListener('click', () => {
+        const año = document.getElementById('año').value;
+        const mes = document.getElementById('mes').value;
+        localStorage.setItem('añoSeleccionado', año);
+        localStorage.setItem('mesSeleccionado', mes);
+        window.location.href = `/home/comparacion/?año=${año}&mes=${mes}`;
+      });
+
+      // Botón Anualidad
+      document.getElementById('btn-ir2').addEventListener('click', () => {
+        const año = document.getElementById('añoAnual').value;
+        localStorage.setItem('añoAnualSeleccionado', año);
+        window.location.href = `/home/ver_comparacion_anual/?año=${año}`;
+      });
     });
   </script>
 
-            <li><a href="{% url 'dash:comparaciones' %}"><i class="fas fa-exchange-alt"></i> Comparaciones</a></li>
-            <li><a href="#"><i class="fas fa-chart-line"></i> Predicciones</a></li>
-            <li class="section">Sesión</li>
-            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-            
-            
-        </ul>
-    </div>
-    <div class="content" id="main-content">
-        <div class="container">
-            {% block content %}
-
-            {% endblock %}
-            
-        </div>
-    </div>
-    <script src="{% static 'js/compButton.js' %}"></script>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Bootstrap scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
