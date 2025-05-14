@@ -3,7 +3,7 @@ import altair as alt
 from prophet import Prophet
 from sqlalchemy import create_engine
 
-# 1. Conectar y cargar datos desde septiembre 2024
+
 engine = create_engine('mysql+mysqlconnector://root:Candelaria24@localhost/truper_ventas')
 query = "SELECT Fecha, GRAN_TOTAL FROM ventas WHERE Fecha >= '2024-09-01'"
 df = pd.read_sql(query, engine)
@@ -21,7 +21,7 @@ futuro = pd.date_range('2025-01-01', '2025-12-31', freq='D')
 df_futuro = pd.DataFrame(futuro, columns=['ds'])
 predicciones = modelo.predict(df_futuro)
 
-# 5. Crear gráfica y guardar como HTML (opcional para visualización en web)
+# 5. Crear gráfica 
 df_real = df.copy()
 df_real['Tipo'] = 'Real'
 df_real = df_real[['ds', 'y', 'Tipo']]
@@ -34,19 +34,18 @@ df_comb = pd.concat([df_real, df_pred], ignore_index=True)
 df_comb.rename(columns={'ds': 'Fecha', 'y': 'Ventas'}, inplace=True)
 df_comb['Fecha'] = pd.to_datetime(df_comb['Fecha'])
 
-chart = alt.Chart(df_comb).mark_point(filled=True, size=30).encode(
+chart = alt.Chart(df_comb).mark_line().encode(
     x=alt.X('Fecha:T', title='Fecha'),
     y=alt.Y('Ventas:Q', title='Ventas'),
     color=alt.Color('Tipo:N', legend=alt.Legend(title="Tipo")),
-    shape=alt.Shape('Tipo:N'),
     tooltip=[
         alt.Tooltip('Fecha:T', title='Fecha'),
         alt.Tooltip('Ventas:Q', title='Ventas'),
         alt.Tooltip('Tipo:N', title='Tipo')
     ]
 ).properties(
-    title='Predicción de Ventas 2025 - Puntos',
-    width='container',  # Responsivo
+    title='Predicción de Ventas 2025',
+    width='container',
     height=500
 )
 with open("dash/static/graficas/predicciones.html", "w", encoding="utf-8") as f:
@@ -68,7 +67,7 @@ total_2025 = predicciones[(predicciones['ds'] >= '2025-01-01') &
 total_2024 = df[(df['ds'] >= '2024-01-01') & 
                 (df['ds'] <= '2024-12-31')]['y'].sum()
 
-# 8. Imprimir resumen en consola
+# 8. 
 print("📊 RESUMEN DE PREDICCIÓN\n-----------------------------")
 if total_2024 > 0:
     incremento_pct = ((total_2025 - total_2024) / total_2024) * 100
@@ -89,7 +88,7 @@ ventas_mensuales['Mes'] = ventas_mensuales['Mes'].astype(str)
 # 10. Calcular % de crecimiento mes a mes
 ventas_mensuales['Crecimiento_%'] = ventas_mensuales['yhat'].pct_change() * 100
 
-# 11. Imprimir resumen mensual
+# 11. 
 print("\n📆 CRECIMIENTO MENSUAL ESTIMADO EN 2025")
 print("------------------------------------------")
 for i, row in ventas_mensuales.iterrows():
