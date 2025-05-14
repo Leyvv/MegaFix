@@ -22,6 +22,7 @@
 }
 
 
+
   .chart-container iframe {
     width: 100%;
     height: 100%;
@@ -29,47 +30,12 @@
     border-radius: 10px;
   }
 
-  .side-boxes {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto 40px auto;
-  }
-
-  .box {
-    padding: 25px;
-    border-radius: 15px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-  }
-
   .box:hover {
     transform: scale(1.03);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   }
 
-  .box i {
-    font-size: 22px;
-  }
-
-  .box:nth-child(1) { background-color: #4CAF50; }
-  .box:nth-child(2) { background-color: #2196F3; }
-  .box:nth-child(3) { background-color: #FF9800; }
-  .box:nth-child(4) { background-color: #9C27B0; }
-  .box:nth-child(5) { background-color: #E91E63; }
-  .box:nth-child(6) { background-color: #607D8B; }
-  .box:nth-child(7) { background-color: #009688; }
-  .box:nth-child(8) { background-color: #3F51B5; }
-  .box:nth-child(9) { background-color: #795548; }
-  .box:nth-child(10) { background-color: #CDDC39; color: black; }
+ 
 
   .top-section iframe {
       display: block;
@@ -78,6 +44,36 @@
       margin: 0;
       padding: 0;
     }
+  .box:nth-child(1) { background-color: #f69c72; }
+  .box:nth-child(2) { background-color: #f69c72; }
+  .box:nth-child(3) { background-color: #f69c72; }
+    .side-boxes {
+  display: flex; /* Alinea los elementos en una fila horizontal */
+  justify-content: space-between; /* Asegura que haya espacio entre los elementos */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten si no caben en una línea */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  max-width: 800px; /* Establece un máximo ancho para las cajas */
+  margin: 0 auto; /* Centra las cajas en la página */
+}
+
+.box {
+  width: 30%; /* Ancho de las cajas (ajustado para que quepan mejor en una fila) */
+  height: 100px; /* Alto de la caja */
+  display: flex;
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  background-color: #f4f4f4; /* Fondo gris claro */
+  border: 1px solid #ddd; /* Borde gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño de la fuente */
+  margin: 5px; /* Espacio alrededor de cada caja */
+  color: #ffffff;
+}
+
+.box i {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
 
 </style>
 
@@ -95,16 +91,131 @@
 </div>
 
 <div class="side-boxes">
-  <div class="box"><i class="fas fa-chart-line"></i> Ventas</div>
-  <div class="box"><i class="fas fa-dollar-sign"></i> Ingresos</div>
-  <div class="box"><i class="fas fa-box"></i> Productos</div>
-  <div class="box"><i class="fas fa-users"></i> Clientes</div>
-  <div class="box"><i class="fas fa-shopping-cart"></i> Compras</div>
-  <div class="box"><i class="fas fa-star"></i> Favoritos</div>
-  <div class="box"><i class="fas fa-percent"></i> Descuentos</div>
-  <div class="box"><i class="fas fa-truck"></i> Envíos</div>
-  <div class="box"><i class="fas fa-sync"></i> Devoluciones</div>
-  <div class="box"><i class="fas fa-calendar-alt"></i> Fechas</div>
+
+  <div class="box"  style="font-size: 20px;"><i class="fas fa-chart"></i><div>
+    <div style="font-size: 30px; text-align: center;" font-family: sans-serif; >3,525</div>
+    <div style="font-family: sans-serif;
+    font-size: 150%;
+    font-style: oblique; font-size: 20px;" >Total de Artículos</div>
+  </div> </div>
+  <div class="box"   style="font-size: 20px; text-align: center;"><i class="fas fa"></i> <div>
+    <div style="font-size: 30px; text-align: center;" >$ 2,677,533.84</div>
+    <div style="font-family: sans-serif;
+    font-size: 150%;
+    font-style: oblique; font-size: 20px;">Ingreso Mensual</div>
+  </div></div>
+  <div class="box"  style="font-size: 20px;"><i class="fas fa"></i>
+    <div>
+      <div style="font-size: 30px; text-align: center;" >29,052</div>
+      <div style="font-family: sans-serif;
+      font-size: 150%;
+      font-style: oblique; font-size: 20px;" >Total de Unidades</div>
+    </div>
+   </div>
 </div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Articulo</th>
+      <th scope="col">Imagen</th>
+      <th scope="col">Unidades</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <th scope="row">1</th>
+         <td>CODO 90° DE PPR 1/2 20MM</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+        
+            <td>571</td>
+            <td>1706.82</td>
+  </tr>
+
+  <tr>
+    <th scope="row">2</th>
+    <td>Empaque de silicón para calentador solar 58 mm</td>
+      <td><img src="../../../static/img/empaque calentador.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+    
+            <td>378</td>
+            <td>3933.81</td>
+  </tr>
+
+  <tr>
+    <th scope="row">3</th>
+     <td>CODO 90° DE PPR 3/4 25MM</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     
+            <td>364</td>
+            <td>1304.82</td>
+  </tr>
+
+  <tr>
+    <th scope="row">4</th>
+    <td>TUBO DE PPR 20MM 1/2 X 4MTS</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+   
+            <td>329</td>
+            <td>16718.47</td>
+  </tr>
+
+  <tr>
+    <th scope="row">5</th>
+      <td>CINTA DE AISLAR # 33 18M NEGRA</td>
+      <td><img src="../../../static/img/cintanegra.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+    
+            <td>287</td>
+            <td>3590.01</td>
+  </tr>
+
+  <tr>
+    <th scope="row">6</th>
+           <td>CODO 90° DE CPVC 13MM</td>
+      <td><img src="../../../static/img/CODO90_19mm.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+   
+            <td>261</td>
+            <td>374.54</td>
+  </tr>
+  <tr>
+    <th scope="row">7</th>
+    <td>RODAJA ESFÉRICA 50 MM CON PLACA</td>
+    <td><img src="../../../static/img/rodaja.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     
+            <td>243</td>
+            <td>5452.54</td>
+</tr>
+</tr>
+
+<tr>
+  <th scope="row">8</th>
+   <td>FLEXÓMETRO 3 COLORES TARJETA CON 6 PZAS 5M X 3/4 PRETUL</td>
+    <td><img src="../../../static/img/flexometro.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+    
+            <td>226</td>
+            <td>7882.20</td>
+</tr>
+
+<tr>
+  <th scope="row">9</th>
+  <td>CABLE DE ACERO 1/4 FLEXIBLE</td>
+    <td><img src="../../../static/img/cable flexible.png" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+   
+            <td>212</td>
+            <td>3350.57</td>
+</tr>
+
+<tr>
+  <th scope="row">10</th>
+<td>CINTA DE TEFLÓN 1/2</td>
+    <td><img src="../../../static/img/cinta teflon pretul.jpg" alt="Descripción de la imagen" style="width: 60px; height: 60px; object-fit: cover;"></td>
+     
+            <td>208</td>
+            <td>810.48</td>
+</tr>
+  </tbody>
+</table>
 
 {% endblock %}

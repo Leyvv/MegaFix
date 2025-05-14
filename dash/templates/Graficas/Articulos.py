@@ -17,9 +17,9 @@ cursor = conexion.cursor()
 
 query = """
 SELECT Articulo, Unidades, Venta
-FROM articulos_marzo2020
+FROM articulos_julio2020
 ORDER BY Unidades DESC
-LIMIT 6;
+LIMIT 10;
 """
 
 cursor.execute(query)
