@@ -23,7 +23,9 @@ query = """
     SELECT Fecha, GRAN_TOTAL 
     FROM Ventas 
 
+
     WHERE Fecha BETWEEN '2020-12-01' AND '2020-12-31';
+
 
 """
 df = pd.read_sql(query, engine)
@@ -37,6 +39,7 @@ df["dia"] = df["Fecha"].dt.strftime("%Y-%m-%d")  # Convertimos a string para evi
 df_grouped = df.groupby("dia")["GRAN_TOTAL"].sum().reset_index()
 
 # 🔹 Crear gráfico de barras horizontales
+
 
 import plotly.graph_objects as go
 
@@ -53,6 +56,7 @@ fig.add_trace(go.Bar(
     hoverinfo='x+y',
     hoverlabel=dict(bgcolor="rgba(255, 103, 32, 1.0)", font_size=16)
 )
+
 
 )
 
@@ -85,6 +89,8 @@ fig.update_layout(
 )
 
 # Guardar como HTML
+
 fig.write_html("dash/static/graficas/grafica_Diciembre2020.html")
 
 print("Gráfico horizontal guardado como 'dash/static/graficas/grafica_Octubre2024.html'")
+

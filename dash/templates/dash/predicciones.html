@@ -1,0 +1,157 @@
+{% extends 'dash/base.html' %}
+{% load static %} 
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 10px;
+  }
+
+  .top-section {
+      margin: 0;
+      padding: 0;
+    }
+
+  .chart-container {
+  width: 99%;         /* Cambia de 90% a 100% */
+  max-width: none;     /* Elimina el límite */
+  height: 650px;       /* Puedes ajustar la altura también si deseas */
+  margin: 10px auto 30px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+  .chart-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+  }
+
+  .box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  .top-section iframe {
+      display: block;
+      width: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+  .box:nth-child(1) { background-color: #003c70; }
+  .box:nth-child(2) { background-color: #003c70; }
+  .box:nth-child(3) { background-color: #003c70; }
+    .side-boxes {
+  display: flex; /* Alinea los elementos en una fila horizontal */
+  justify-content: space-between; /* Asegura que haya espacio entre los elementos */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten si no caben en una línea */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  max-width: 800px; /* Establece un máximo ancho para las cajas */
+  margin: 0 auto; /* Centra las cajas en la página */
+}
+
+.box {
+  width: 30%; /* Ancho de las cajas (ajustado para que quepan mejor en una fila) */
+  height: 100px; /* Alto de la caja */
+  display: flex;
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  background-color: #f4f4f4; /* Fondo gris claro */
+  border: 1px solid #ddd; /* Borde gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño de la fuente */
+  margin: 5px; /* Espacio alrededor de cada caja */
+  color: #ffffff;
+}
+
+.box i {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+.table-container {
+    width: 80%;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Opcional para ajustar verticalmente */
+}
+
+</style>
+
+<div class="side-boxes">
+
+
+  <div class="box"  style="font-size: 20px;"><i class="fas fa-chart"></i><div>
+    <div style="font-size: 40px; text-align: center;" font-family: sans-serif; >2025</div>
+    <div style="font-family: sans-serif;
+    font-size: 150%;
+    font-style: oblique; font-size: 30px;" >Estimaciones</div>
+  </div> </div>
+  <div class="box"   style="font-size: 20px; text-align: center;"><i class="fas fa"></i> <div>
+    <div style="font-size: 30px; text-align: center;" >$92,397,816.28</div>
+    <div style="font-family: sans-serif;
+    font-size: 150%;
+    font-style: oblique; font-size: 20px;">Valor Proyectado</div>
+  </div></div>
+  <div class="box"  style="font-size: 20px;"><i class="fas fa"></i>
+    <div>
+      <div style="font-size: 30px; text-align: center;" >425.43%</div>
+      <div style="font-family: sans-serif;
+      font-size: 150%;
+      font-style: oblique; font-size: 20px;" >Taza de Crecimiento</div>
+    </div>
+   </div>
+</div>
+
+<div class="chart-container" style="width: 100%; max-width: 1000px; margin: auto;">
+  <iframe
+    src="{% static 'graficas/predicciones.html' %}"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+    allowfullscreen
+  ></iframe>
+</div>
+
+
+
+<table class="table table-hover">
+  <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Valor Estimado</th>
+                        <th>Tasa de Crecimiento Mensual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Enero 2025</td><td>$5,625,413.08</td><td>Mes inicial</td></tr>
+                    <tr><td>Febrero 2025</td><td>$5,409,318.90</td><td>-3.84%</td></tr>
+                    <tr><td>Marzo 2025</td><td>$6,355,147.52</td><td>17.49%</td></tr>
+                    <tr><td>Abril 2025</td><td>$6,603,579.09</td><td>3.91%</td></tr>
+                    <tr><td>Mayo 2025</td><td>$7,224,948.55</td><td>9.41%</td></tr>
+                    <tr><td>Junio 2025</td><td>$7,338,329.42</td><td>1.57%</td></tr>
+                    <tr><td>Julio 2025</td><td>$8,074,639.07</td><td>10.03%</td></tr>
+                    <tr><td>Agosto 2025</td><td>$8,446,589.59</td><td>4.61%</td></tr>
+                    <tr><td>Septiembre 2025</td><td>$8,541,497.82</td><td>1.12%</td></tr>
+                    <tr><td>Octubre 2025</td><td>$9,311,060.27</td><td>9.01%</td></tr>
+                    <tr><td>Noviembre 2025</td><td>$9,377,783.06</td><td>0.72%</td></tr>
+                    <tr><td>Diciembre 2025</td><td>$10,089,509.92</td><td>-3.84%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

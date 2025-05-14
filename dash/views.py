@@ -16,6 +16,9 @@ def home2View(request):
 def comparaciones(request):
     return render(request, 'dash/comparaciones.html')
 
+def predicciones(request):
+    return render(request, 'dash/predicciones.html')
+
 def grafica_2020(request):
     return render(request, 'dash/grafica_2020.html')
 
@@ -64,4 +67,10 @@ def ver_comparacion(request):
         'dia_semana': dia_semana,
         'cantidad': cantidad
     })
+
+
+
+
+
+
 

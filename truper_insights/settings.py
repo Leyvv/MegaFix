@@ -131,5 +131,8 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/' 
+# Add these at the bottom
+LOGIN_REDIRECT_URL = '/home/home2/'  # Where to redirect after login
+LOGOUT_REDIRECT_URL = '/login/'  # Where to redirect after logout
 #LOGIN_REDIRECT_URL = 'dash:home'
 #LOGOUT_REDIRECT_URL = '/login/' 
