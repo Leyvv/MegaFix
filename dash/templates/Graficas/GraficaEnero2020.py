@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, text
 # Configurar conexión a MySQL
 host = "localhost"
 user = "root"
-password = "Candelaria24"
+password = "itsoeh23"
 database = "truper_ventas"
 
 # Crear conexión con SQLAlchemy
@@ -22,7 +22,7 @@ except Exception as e:
 query = """
     SELECT Fecha, GRAN_TOTAL 
     FROM Ventas 
-    WHERE Fecha BETWEEN '2020-12-01' AND '2020-12-31';
+    WHERE Fecha BETWEEN '2020-08-01' AND '2020-08-31';
 """
 df = pd.read_sql(query, engine)
 print(df.head())
@@ -58,7 +58,7 @@ fig.add_trace(go.Bar(
 
 fig.update_layout(
     title=dict(
-        text="<b>Ventas por Día en Diciembre 2020</b>",
+        text="<b>Ventas por Día en Agosto 2023</b>",
         x=0.5,
         xanchor='center',
         font=dict(
@@ -86,6 +86,6 @@ fig.update_layout(
 
 # Guardar como HTML
 
-fig.write_html("dash/static/graficas/grafica_Diciembre2020.html")
+fig.write_html("dash/static/graficas/grafica_Agosto2023.html")
 
-print("Gráfico horizontal guardado como 'dash/static/graficas/grafica_Octubre2024.html'")
+print("Gráfico horizontal guardado como 'dash/static/graficas/grafica_Agosto2023.html'")

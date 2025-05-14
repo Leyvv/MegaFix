@@ -39,8 +39,6 @@
 
 
 
-
-
   .box:nth-child(1) { background-color: #f69c72; }
   .box:nth-child(2) { background-color: #f69c72; }
   .box:nth-child(3) { background-color: #f69c72; }
@@ -89,7 +87,7 @@
 
 <div class="chart-container">
   <iframe
-    src="{% static 'graficas/grafica_Agosto2023.html' %}"
+    src="{% static 'graficas/grafica_Agosto2023.html' %}?v={% now 'U' %}"
     loading="lazy"
     referrerpolicy="no-referrer"
     allowfullscreen

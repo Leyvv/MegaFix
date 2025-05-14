@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Resumen</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -29,6 +29,7 @@
       align-items: center;
       gap: 10px;
       font-weight: bold;
+      color: #3b3b3b;
     }
 
     .box i {
@@ -51,13 +52,12 @@
       margin-top: 2px;
     }
 
-    /* Degradado progresivo: claro y suave */
-  .box:nth-child(6n+1) { background: linear-gradient(135deg, #f6c5a4, #f9d4b7); color: #3b3b3b; }
-  .box:nth-child(6n+2) { background: linear-gradient(135deg, #f9d4b7, #fae0c5); color: #3b3b3b; }
-  .box:nth-child(6n+3) { background: linear-gradient(135deg, #fae0c5, #fdf0db); color: #3b3b3b; }
-  .box:nth-child(6n+4) { background: linear-gradient(135deg, #fdf0db, #fff5e8); color: #2f2f2f; }
-  .box:nth-child(6n+5) { background: linear-gradient(135deg, #fff5e8, #fdfcf9); color: #2f2f2f; }
-  .box:nth-child(6n+6) { background: linear-gradient(135deg, #fdfcf9, #ffffff); color: #2f2f2f; }
+    .box:nth-child(6n+1) { background: linear-gradient(135deg, #F4A261, #E65D1D); color: white; }
+    .box:nth-child(6n+2) { background: linear-gradient(135deg, #E65D1D, #F28D2C); color: white; }
+    .box:nth-child(6n+3) { background: linear-gradient(135deg, #F28D2C, #F4A261); color: white; }
+    .box:nth-child(6n+4) { background: linear-gradient(135deg, #F4A261, #F9B974); color: #2f2f2f; }
+    .box:nth-child(6n+5) { background: linear-gradient(135deg, #F9B974, #FEE9C8); color: #2f2f2f; }
+    .box:nth-child(6n+6) { background: linear-gradient(135deg, #FEE9C8, #FFFFFF); color: #2f2f2f; }
 
     .box:hover {
       transform: translateY(-4px);
@@ -75,7 +75,6 @@
       }
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </head>
 <body>
   <div class="container">
