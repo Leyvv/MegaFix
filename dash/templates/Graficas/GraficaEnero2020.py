@@ -23,8 +23,8 @@ query = """
     SELECT Fecha, GRAN_TOTAL 
     FROM Ventas 
 
+    WHERE Fecha BETWEEN '2024-01-01' AND '2024-01-31';
 
-    WHERE Fecha BETWEEN '2020-12-01' AND '2020-12-31';
 
 
 """
@@ -62,7 +62,7 @@ fig.add_trace(go.Bar(
 
 fig.update_layout(
     title=dict(
-        text="<b>Ventas por Día en Diciembre 2020</b>",
+        text="<b>Ventas por Día en Enero 2024</b>",
         x=0.5,
         xanchor='center',
         font=dict(
@@ -90,7 +90,9 @@ fig.update_layout(
 
 # Guardar como HTML
 
-fig.write_html("dash/static/graficas/grafica_Diciembre2020.html")
+
+fig.write_html("dash/static/graficas/grafica_Enero2024.html")
 
 print("Gráfico horizontal guardado como 'dash/static/graficas/grafica_Octubre2024.html'")
+
 
