@@ -4,6 +4,9 @@ from django.http import JsonResponse
 from dash.templates.Graficas.comp import generar_html_comparacion
 from django.http import Http404
 from django.template.exceptions import TemplateDoesNotExist
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseBadRequest
+
 
 @login_required
 def homeView(request):
@@ -63,3 +66,51 @@ def ver_comparacion_anual(request):
         return render(request, template_name)
     except TemplateDoesNotExist:
         return render(request, 'error.html', {'mensaje': f'La plantilla para el año {año} no se encontró'})
+
+
+
+
+
+
+
+@csrf_exempt
+def comparar_ventas(request):
+    if request.method == "GET":
+        year1 = request.GET.get("year1")
+        year2 = request.GET.get("year2")
+
+        if not year1 or not year2:
+            return JsonResponse({"error": "Faltan parámetros de año."}, status=400)
+
+        try:
+            year1 = int(year1)
+            year2 = int(year2)
+            generar_html_comparacion(year1, year2)
+            return JsonResponse({"message": "Gráfica generada exitosamente."})
+        except ValueError:
+            return JsonResponse({"error": "Los parámetros de año deben ser números enteros."}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    else:
+        return JsonResponse({"error": "Método no permitido."}, status=405)
+    
+
+    
+def ver_comparacion(request):
+    año = request.GET.get("año")
+    mes = request.GET.get("mes")
+
+    if not año or not mes:
+        return render(request, 'error.html', {'mensaje': 'Año o mes no proporcionado'})
+
+    template_name = f'datosEnero-Diciembre 2020-2024/{año}/{mes}.html'
+
+    try:
+        return render(request, template_name)
+    except TemplateDoesNotExist:
+        return render(request, 'error.html', {'mensaje': f'La plantilla {template_name} no se encontró'})
+    
+def home(request):
+    token = request.session.get('jwt_token', 'Token no disponible')
+    return render(request, 'dash/home.html', {'token': token})
+

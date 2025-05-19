@@ -12,7 +12,7 @@
           const year1 = document.getElementById("year1").value;
           const year2 = document.getElementById("year2").value;
       
-          fetch(`/comparar_ventas/?year1=${year1}&year2=${year2}`)
+          fetch(`/home/comparar_ventas/?year1=${year1}&year2=${year2}`)
             .then(response => {
               if (response.ok) {
                 // Actualiza el iframe con la nueva gráfica
@@ -22,38 +22,152 @@
               }
             });
         }
+
+        function actualizarGrafica() {
+          const year1 = document.getElementById("year1").value;
+          const year2 = document.getElementById("year2").value;
+
+          fetch(`/home/comparar_ventas/?year1=${year1}&year2=${year2}`)
+            .then(response => {
+              if (response.ok) {
+                // Actualiza el iframe con la nueva gráfica
+                document.getElementById("grafica").src = "/static/graficas/comparacion.html?timestamp=" + new Date().getTime();
+              } else {
+                response.json().then(data => {
+                  alert(data.error || "Error al generar la gráfica.");
+                });
+              }
+            })
+            .catch(error => {
+              alert("Error de conexión con el servidor.");
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+          const year1 = document.getElementById("year1").value;
+          const year2 = document.getElementById("year2").value;
+
+          fetch(`/home/comparar_ventas/?year1=${year1}&year2=${year2}`)
+            .then(response => {
+              if (response.ok) {
+                // Actualiza el iframe con la nueva gráfica
+                document.getElementById("grafica").src = "/static/graficas/comparacion.html?timestamp=" + new Date().getTime();
+              } else {
+                alert("Error al generar la gráfica automáticamente.");
+              }
+            });
+        });
       </script>
-      
+      <style>
+        /* General */
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f4f4f9;
+          color: #333;
+          margin: 0;
+          padding: 0;
+        }
+
+        h1 {
+          color: #003366;
+          font-size: 36px;
+          text-align: center;
+          margin-bottom: 30px;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+
+        h2 {
+          color: #00509e;
+          font-size: 24px;
+          text-align: center;
+          margin-bottom: 20px;
+        }
+
+        .form-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+          margin-bottom: 20px;
+        }
+
+        label {
+          font-size: 18px;
+          color: #003366;
+          margin-right: 10px;
+        }
+
+        select {
+          padding: 10px;
+          border: 2px solid #00509e;
+          border-radius: 8px;
+          font-size: 16px;
+          background-color: #ffffff;
+          color: #333;
+          transition: box-shadow 0.3s;
+        }
+
+        select:focus {
+          outline: none;
+          box-shadow: 0 0 10px rgba(0, 80, 158, 0.5);
+        }
+
+        button {
+          padding: 10px 20px;
+          background-color: #ff6600;
+          color: #ffffff;
+          border: none;
+          border-radius: 8px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+          background-color: #e65c00;
+          transform: scale(1.05);
+        }
+
+        iframe {
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          width: 100%;
+          height: 500px;
+          margin-top: 20px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+      </style>
 </head>
 <body>
-    <h1>Página de Comparacioneess</h1>
+    
 <h2>Selecciona los años a comparar</h2>
 
-<label for="year1">Año 1:</label>
-<select id="year1">
-  <option value="2020">2020</option>
-  <option value="2021">2021</option>
-  <option value="2022">2022</option>
-  <option value="2023">2023</option>
-  <option value="2024">2024</option>
-</select>
+<div class="form-container">
+  <label for="year1">Año 1:</label>
+  <select id="year1" onchange="actualizarGrafica()">
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+  </select>
 
-<label for="year2">Año 2:</label>
-<select id="year2">
-  <option value="2020">2020</option>
-  <option value="2021">2021</option>
-  <option value="2022">2022</option>
-  <option value="2023">2023</option>
-  <option value="2024">2024</option>
-</select>
+  <label for="year2">Año 2:</label>
+  <select id="year2" onchange="actualizarGrafica()">
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+  </select>
 
-<button onclick="comparar()">Comparar</button>
+  <button onclick="comparar()">Comparar</button>
+</div>
 
-
-<iframe src="{% static 'graficas/comparacion.html' %}" width="100%" height="500px"></iframe>
+<iframe id="grafica" src="{% static 'graficas/comparacion.html' %}" width="100%" height="500px"></iframe>
 </body>
 </html>
 
 
 {% endblock %}
-

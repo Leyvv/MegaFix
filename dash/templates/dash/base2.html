@@ -130,46 +130,49 @@
     <div class="sidebar">
         <h2><i class="fas fa-tachometer-alt"></i> MEGAFIX</h2>
         <ul class="menu">
-            <li class="section">Pages</li>
+          
             <li><a href="{% url 'dash:home2' %}"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li class="section">Mensualidad</li>
-            <select id="año">
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-            </select>
-            
-            <select id="mes">
-                <option value="enero">Enero</option>
-                <option value="febrero">Febrero</option>
-                <option value="marzo">Marzo</option>
-                <option value="abril">Abril</option>
-                <option value="mayo">Mayo</option>
-                <option value="junio">Junio</option>
-                <option value="julio">Julio</option>
-                <option value="agosto">Agosto</option>
-                <option value="septiembre">Septiembre</option>
-                <option value="octubre">Octubre</option>
-                <option value="noviembre">Noviembre</option>
-                <option value="diciembre">Diciembre</option>
-            </select>
-            
-            <button id="btn-ir">Ir</button>
+           <!-- Sección Mensualidad -->
+      <li class="section">Mensualidad</li>
+      <div style="display: flex; gap: 5px;">
+        <select id="año" style="width: 80%;">
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+        </select>
 
-            <li class="section">Anualidad</li>
-            <select id="año">
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-            </select>
+        <select id="mes" style="width: 80%;">
+          <option value="enero">Enero</option>
+          <option value="febrero">Febrero</option>
+          <option value="marzo">Marzo</option>
+          <option value="abril">Abril</option>
+          <option value="mayo">Mayo</option>
+          <option value="junio">Junio</option>
+          <option value="julio">Julio</option>
+          <option value="agosto">Agosto</option>
+          <option value="septiembre">Septiembre</option>
+          <option value="octubre">Octubre</option>
+          <option value="noviembre">Noviembre</option>
+          <option value="diciembre">Diciembre</option>
+        </select>
+      </div>
+      <button id="btn-ir">Consultar</button>
 
-            <button id="btn-ir2">Ir</button>
+      <!-- Sección Anualidad -->
+      <li class="section">Anualidad</li>
+      <select id="añoAnual">
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
+      <button type="button" id="btn-ir2">Consultar</button>
 
             <li><a href="{% url 'dash:comparaciones' %}"><i class="fas fa-exchange-alt"></i> Comparaciones</a></li>
+             <li><a href="{% url 'dash:predicciones' %}"><i class="fas fa-chart-line"></i> Predicciones</a></li>
             
             <li class="section">Sesión</li>
             <div class="sidebar-section">
@@ -200,48 +203,35 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script>
-        // Cargar selección al abrir la página
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedYear = localStorage.getItem('añoSeleccionado');
-            const savedMonth = localStorage.getItem('mesSeleccionado');
-        
-            if (savedYear) {
-                document.getElementById('año').value = savedYear;
-            }
-        
-            if (savedMonth) {
-                document.getElementById('mes').value = savedMonth;
-            }
-        });
-        
-        // Guardar selección al hacer clic en el botón
-        document.getElementById('btn-ir').addEventListener('click', () => {
-            const año = document.getElementById('año').value;
-            const mes = document.getElementById('mes').value;
-        
-            localStorage.setItem('añoSeleccionado', año);
-            localStorage.setItem('mesSeleccionado', mes);
-        
-            console.log(`Año: ${año}, Mes: ${mes}`);
-        });
-        
-        // Para el segundo botón de anualidad
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedYear = localStorage.getItem('añoSeleccionado');
-            
-            if (savedYear) {
-                document.querySelectorAll('#año')[1].value = savedYear;
-            }
-        });
-        
-        document.getElementById('btn-ir2').addEventListener('click', () => {
-            const año = document.querySelectorAll('#año')[1].value;
-            
-            localStorage.setItem('añoSeleccionado', año);
-            
-            console.log(`Año: ${año}`);
-        });
-    </script>
+    
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cargar selección guardada
+      const savedYear = localStorage.getItem('añoSeleccionado');
+      const savedMonth = localStorage.getItem('mesSeleccionado');
+      const savedAnualYear = localStorage.getItem('añoAnualSeleccionado');
+
+      if (savedYear) document.getElementById('año').value = savedYear;
+      if (savedMonth) document.getElementById('mes').value = savedMonth;
+      if (savedAnualYear) document.getElementById('añoAnual').value = savedAnualYear;
+
+      // Botón Mensualidad
+      document.getElementById('btn-ir').addEventListener('click', () => {
+        const año = document.getElementById('año').value;
+        const mes = document.getElementById('mes').value;
+        localStorage.setItem('añoSeleccionado', año);
+        localStorage.setItem('mesSeleccionado', mes);
+        window.location.href = `/home/comparacion/?año=${año}&mes=${mes}`;
+      });
+
+      // Botón Anualidad
+      document.getElementById('btn-ir2').addEventListener('click', () => {
+        const año = document.getElementById('añoAnual').value;
+        localStorage.setItem('añoAnualSeleccionado', año);
+        window.location.href = `/home/ver_comparacion_anual/?año=${año}`;
+      });
+    });
+  </script>
 </body>
 </html>

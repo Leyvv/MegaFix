@@ -6,7 +6,7 @@ import os
 # Configuración de la conexión a MySQL
 host = "localhost"
 user = "root"
-password = "itsoeh23"
+password = "Candelaria24"
 database = "truper_ventas"
 engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}/{database}")
 
@@ -26,9 +26,12 @@ def obtener_datos_ventas(year):
     return df
 
 # Generar la gráfica y guardarla como HTML
-def generar_html_comparacion(year1=2022, year2=2023, ruta_salida="dash/static/graficas/comparacion.html"):
+def generar_html_comparacion(year1=2021, year2=2023, ruta_salida="dash/static/graficas/comparacion.html"):
     df1 = obtener_datos_ventas(year1)
     df2 = obtener_datos_ventas(year2)
+
+    if df1.empty or df2.empty:
+        raise ValueError("No se encontraron datos para los años seleccionados. Por favor, elige años con datos disponibles.")
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df1['mes'], y=df1['ventas'], mode='lines+markers', name=f"Año {year1}"))

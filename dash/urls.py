@@ -21,6 +21,7 @@ urlpatterns = [
  path('comparar_ventas/', views.comparar_ventas, name='comparar_ventas'),
     path('comparacion/', views.ver_comparacion, name='ver_comparacion'),
     path('ver_comparacion_anual/', views.ver_comparacion_anual, name='ver_comparacion_anual'),
+    
     path('datosEnero-Diciembre 2020-2024/<int:anio>/<str:mes>.html',
          views.ver_datos_mes,
          name='ver_datos_mes'),
